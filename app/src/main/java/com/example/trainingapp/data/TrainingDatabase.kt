@@ -1,6 +1,9 @@
 package com.example.trainingapp.data
 
+import android.content.Context
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Training::class], version = 1, exportSchema = false)
@@ -11,17 +14,16 @@ abstract class TrainingDatabase : RoomDatabase() {
         @Volatile
         private var Instance: TrainingDatabase? = null
 
-        fun getDatabase(context: android.content.Context): TrainingDatabase {
+        fun getDatabase(context: Context): TrainingDatabase {
             return Instance ?: synchronized(this) {
-                val instance = androidx.room.Room.databaseBuilder(
-                    context.applicationContext,
+                Room.databaseBuilder(
+                    context,
                     TrainingDatabase::class.java,
                     "training_database"
                 )
                     .fallbackToDestructiveMigration()
                     .build()
-                Instance = instance
-                instance
+                    .also { Instance = it}
             }
         }
     }

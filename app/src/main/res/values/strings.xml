@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Training App</string>
+    <string name="start_workout">Start Workout</string>
+    <string name="home">Home</string>
 </resources>
