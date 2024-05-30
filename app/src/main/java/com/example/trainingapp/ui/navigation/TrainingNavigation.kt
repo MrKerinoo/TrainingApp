@@ -21,7 +21,8 @@ fun TrainingNavigation(
         composable(route = HomeDestination.route) {
             HomeScreen(
                 navigateToHistory = { navController.navigate("history") },
-                navigateToWorkout = { navController.navigate("workout") }
+                navigateToWorkout = { navController.navigate("workout") },
+                navigateToProfile = { navController.navigate("profile") }
             )
         }
     }
