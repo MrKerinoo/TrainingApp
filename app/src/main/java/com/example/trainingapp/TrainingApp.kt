@@ -78,7 +78,7 @@ fun TrainingAppTopAppBar(
 @Composable
 fun TrainingAppBottomAppBar(
     navigateToHistory: () -> Unit = {},
-    navigateToWorkout: () -> Unit = {},
+    navigateToHome: () -> Unit = {},
     navigateToProfile: () -> Unit = {}
 ) {
 
@@ -102,7 +102,7 @@ fun TrainingAppBottomAppBar(
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    IconButton(onClick = navigateToWorkout) {
+                    IconButton(onClick = navigateToHome) {
                         Icon(Icons.Filled.Add, contentDescription = "Start Workout")
                     }
                     Text(stringResource(R.string.start_workout))

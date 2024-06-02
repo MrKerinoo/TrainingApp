@@ -63,7 +63,7 @@ object HomeDestination : NavigationDestination {
 @Composable
 fun HomeScreen(
     navigateToHistory: () -> Unit,
-    navigateToWorkout: () -> Unit,
+    navigateToHome: () -> Unit,
     navigateToProfile: () ->Unit,
     modifier: Modifier = Modifier,
     viewModel : HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -83,7 +83,7 @@ fun HomeScreen(
         bottomBar = {
             TrainingAppBottomAppBar(
                 navigateToHistory = navigateToHistory,
-                navigateToWorkout = navigateToWorkout,
+                navigateToHome = navigateToHome,
                 navigateToProfile = navigateToProfile
             )
         },
@@ -132,7 +132,7 @@ private fun HomeBody(
 }
 
 @Composable
-fun TrainingList(
+private fun TrainingList(
     trainingList: List<Training>,
     onItemClick: (Training) -> Unit,
     modifier: Modifier = Modifier
@@ -150,7 +150,7 @@ fun TrainingList(
 }
 
 @Composable
-fun TrainingItem(
+private fun TrainingItem(
     training: Training,
     modifier: Modifier = Modifier
 ) {

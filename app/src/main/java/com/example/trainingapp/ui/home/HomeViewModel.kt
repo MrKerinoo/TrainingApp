@@ -7,6 +7,7 @@ import com.example.trainingapp.data.TrainingsRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -30,28 +31,46 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
     fun addTraining() {
         viewModelScope.launch {
             val allTrainings = trainingsRepository.getAllTrainingsStream().first()
-            if (allTrainings.size < 2) {
-                val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-                val date1 = dateFormat.parse("25.05.2024")
-                val training1 = Training(
-                    name = "Push workout",
-                    date = date1 ?: Date()
-                )
-                trainingsRepository.insertTraining(training1)
 
-                val date2 = dateFormat.parse("26.05.2024")
-                val training2 = Training(
-                    name = "Legs workout",
-                    date = date2 ?: Date()
-                )
-                trainingsRepository.insertTraining(training2)
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val date1 = dateFormat.parse("25.04.2024")
+            val training1 = Training(
+                name = "FullBody workout",
+                date = date1 ?: Date()
+            )
+            trainingsRepository.insertTraining(training1)
+
+            val date2 = dateFormat.parse("15.05.2024")
+            val training2 = Training(
+                name = "Upper workout",
+                date = date2 ?: Date()
+            )
+            trainingsRepository.insertTraining(training2)
+
+            val date3 = dateFormat.parse("5.03.2024")
+            val training3 = Training(
+                name = "Lower workout",
+                date = date3 ?: Date()
+            )
+            trainingsRepository.insertTraining(training3)
+        }
+    }
+
+    fun deleteAllTrainings() {
+        viewModelScope.launch {
+            val allTrainings = trainingsRepository.getAllTrainingsStream().first()
+
+            allTrainings.forEach { training ->
+                trainingsRepository.deleteTraining(training)
             }
         }
     }
 
+    /*
     init {
         addTraining()
     }
+    */
 }
 
 

@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.trainingapp.TrainingApplication
+import com.example.trainingapp.ui.history.HistoryViewModel
 import com.example.trainingapp.ui.home.HomeViewModel
 
 /**
@@ -34,7 +35,17 @@ object AppViewModelProvider {
         initializer {
             HomeViewModel(trainingApplication().container.trainingsRepository)
         }
+
+        // Initializer for HistoryViewModel
+        initializer {
+            HistoryViewModel(
+                this.createSavedStateHandle(),
+                trainingApplication().container.trainingsRepository)
+        }
     }
+
+
+
 }
 
 /**

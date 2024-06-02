@@ -2,9 +2,12 @@ package com.example.trainingapp.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.H
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.trainingapp.ui.history.HistoryDestination
+import com.example.trainingapp.ui.history.HistoryScreen
 import com.example.trainingapp.ui.home.HomeDestination
 import com.example.trainingapp.ui.home.HomeScreen
 
@@ -20,9 +23,17 @@ fun TrainingNavigation(
     ) {
         composable(route = HomeDestination.route) {
             HomeScreen(
-                navigateToHistory = { navController.navigate("history") },
-                navigateToWorkout = { navController.navigate("workout") },
-                navigateToProfile = { navController.navigate("profile") }
+                navigateToHistory = { navController.navigate(HistoryDestination.route) },
+                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateToProfile = { /*TODO*/ }
+            )
+        }
+
+        composable(route = HistoryDestination.route) {
+            HistoryScreen(
+                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateToProfile = { /*TODO*/ },
+                navigateToHistory = { navController.navigate(HistoryDestination.route)}
             )
         }
     }
