@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,6 +43,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -53,6 +55,7 @@ import com.example.trainingapp.ui.navigation.NavigationDestination
 import com.example.trainingapp.ui.AppViewModelProvider
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.xml.transform.Templates
 
 object HomeDestination : NavigationDestination {
     override val route: String = "home"
@@ -69,7 +72,7 @@ fun HomeScreen(
     viewModel : HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -111,6 +114,11 @@ private fun HomeBody(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ){
+        Training(
+            modifier = Modifier.padding(16.dp),
+            addOnClick = { /*TODO*/ }
+        )
+
         if (trainingList.isEmpty())
         {
             Text (
@@ -137,9 +145,17 @@ private fun TrainingList(
     onItemClick: (Training) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
-        modifier = modifier,
-        columns = GridCells.Fixed(2))
+    Column {
+        Text(
+            text = "${stringResource(R.string.my_trainings)}(${trainingList.size})",
+            color = MaterialTheme.colorScheme.onPrimary,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleMedium,
+            modifier = modifier
+            )
+        LazyVerticalGrid(
+            modifier = modifier,
+            columns = GridCells.Fixed(2))
         {
             items(trainingList) { training ->
                 TrainingItem(training = training,
@@ -147,6 +163,8 @@ private fun TrainingList(
                         .clickable {onItemClick(training)})
             }
         }
+    }
+
 }
 
 @Composable
@@ -162,7 +180,7 @@ private fun TrainingItem(
             .fillMaxWidth()
             .height(200.dp)
             .padding(16.dp)
-            .border(1.dp, MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(25.dp)), // apply the shape to the border
+            .border(1.dp, MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(25.dp)),
         shape = RoundedCornerShape(25.dp), // make corners rounded
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
@@ -183,8 +201,8 @@ private fun TrainingItem(
             Spacer(Modifier.weight(1f))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Default.DateRange, // replace with your date icon
-                    contentDescription = "Date icon",
+                    imageVector = Icons.Default.DateRange,
+                    contentDescription = stringResource(R.string.calendar_title),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(Modifier.width(8.dp))
@@ -195,4 +213,56 @@ private fun TrainingItem(
             }
         }
     }
+}
+
+@Composable
+private fun Training(
+  modifier: Modifier = Modifier,
+  addOnClick: () -> Unit,
+) {
+    Row (
+        modifier = modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        Text(
+            text = stringResource(R.string.trainings),
+            color = MaterialTheme.colorScheme.onPrimary,
+            textAlign = TextAlign.Left,
+            fontSize = 25.sp,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = modifier
+        )
+
+        Row(
+            modifier = modifier
+                .clickable { addOnClick }
+                .clip(RoundedCornerShape(25.dp))
+                .background(color = MaterialTheme.colorScheme.onTertiary)
+                .padding(horizontal = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = stringResource(R.string.add_training_title),
+                tint = MaterialTheme.colorScheme.tertiary
+            )
+
+            Text(
+                text = stringResource(R.string.training),
+                color = MaterialTheme.colorScheme.tertiary,
+                style = MaterialTheme.typography.titleLarge,
+            )
+        }
+    }
+}
+
+@Preview(showBackground = false)
+@Composable
+fun TrainingPreview()
+{
+    Training(
+        addOnClick = { /*TODO*/ }
+    )
 }

@@ -40,19 +40,6 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
             )
             trainingsRepository.insertTraining(training1)
 
-            val date2 = dateFormat.parse("15.05.2024")
-            val training2 = Training(
-                name = "Upper workout",
-                date = date2 ?: Date()
-            )
-            trainingsRepository.insertTraining(training2)
-
-            val date3 = dateFormat.parse("5.03.2024")
-            val training3 = Training(
-                name = "Lower workout",
-                date = date3 ?: Date()
-            )
-            trainingsRepository.insertTraining(training3)
         }
     }
 

@@ -7,4 +7,11 @@
     <string name="history">History</string>
     <string name="profile">Profile</string>
     <string name="no_training">No training</string>
+    <string name="trainings">Trainings</string>
+    <string name="training">Training</string>
+    <string name="my_trainings">My Trainings</string>
+
+    //Icon descriptions
+    <string name="add_training_title">Add training</string>
+    <string name="calendar_title">Calendar</string>
 </resources>

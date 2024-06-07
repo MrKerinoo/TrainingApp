@@ -63,7 +63,7 @@ fun HistoryScreen(
     viewModel: HistoryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val historyUiState by viewModel.historyUiState.collectAsState()
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
