@@ -8,8 +8,12 @@ interface AppContainer{
 
 class AppDataContainer(private val context: Context) : AppContainer {
 
-
     override val trainingsRepository: TrainingsRepository by lazy {
-        OfflineTrainingsRepository(TrainingDatabase.getDatabase(context).trainingDao())
+        OfflineTrainingsRepository(
+            trainingDao = TrainingDatabase.getDatabase(context).trainingDao(),
+            trainingHistoryDao = TrainingDatabase.getDatabase(context).historyDao(),
+            exerciseDao = TrainingDatabase.getDatabase(context).exerciseDao(),
+            serieDao = TrainingDatabase.getDatabase(context).serieDao()
+        )
     }
 }

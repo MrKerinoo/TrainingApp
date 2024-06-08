@@ -25,27 +25,37 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.trainingapp.TrainingApplication
 import com.example.trainingapp.ui.history.HistoryViewModel
 import com.example.trainingapp.ui.home.HomeViewModel
+import com.example.trainingapp.ui.training.ExerciseEntryViewModel
+import com.example.trainingapp.ui.training.TrainingEntryViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app
  */
 object AppViewModelProvider {
     val Factory = viewModelFactory {
-        // Initializer for HomeViewModel
+
         initializer {
             HomeViewModel(trainingApplication().container.trainingsRepository)
         }
-
-        // Initializer for HistoryViewModel
         initializer {
             HistoryViewModel(
                 this.createSavedStateHandle(),
                 trainingApplication().container.trainingsRepository)
         }
+
+        initializer {
+            TrainingEntryViewModel(
+                savedStateHandle = this.createSavedStateHandle(),
+                trainingsRepository = trainingApplication().container.trainingsRepository)
+        }
+
+        initializer {
+            ExerciseEntryViewModel(
+                savedStateHandle = this.createSavedStateHandle()
+            )
+        }
+
     }
-
-
-
 }
 
 /**

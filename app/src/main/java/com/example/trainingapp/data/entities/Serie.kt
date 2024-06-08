@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "sets",
+    tableName = "series",
     foreignKeys = [
         ForeignKey(
         entity = Exercise::class,
@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class Set (
+data class Serie (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val exerciseId: Int, // Foreign key

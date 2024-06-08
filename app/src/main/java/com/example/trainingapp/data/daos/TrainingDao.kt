@@ -19,7 +19,7 @@ interface TrainingDao {
     fun getItem(id: Int): Flow<Training>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(training: Training)
+    suspend fun insert(training: Training): Long
 
     @Update
     suspend fun update(training: Training)

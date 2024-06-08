@@ -20,5 +20,8 @@ data class Exercise(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val trainingId: Int, // Foreign key
-    val name: String
+    val name: String,
+    val sets: Int,
+    val reps: Int,
+    val weight: Float
 )

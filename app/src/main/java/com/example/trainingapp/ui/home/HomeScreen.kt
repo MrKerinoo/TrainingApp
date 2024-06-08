@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,6 +62,7 @@ fun HomeScreen(
     navigateToHistory: () -> Unit,
     navigateToHome: () -> Unit,
     navigateToProfile: () ->Unit,
+    navigateToTrainingEntry: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel : HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -87,6 +89,7 @@ fun HomeScreen(
         HomeBody(
             trainingList = homeUiState.trainingList,
             onItemClick = { /*TODO*/ },
+            addOnClick = navigateToTrainingEntry,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -96,12 +99,12 @@ fun HomeScreen(
 private fun HomeBody(
     trainingList: List<Training>,
     onItemClick: (Int) -> Unit,
+    addOnClick: () -> Unit,
     modifier: Modifier = Modifier,
 )
 {
     Column (
         modifier = modifier
-            .fillMaxSize()
             .wrapContentSize(Alignment.Center),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -109,7 +112,7 @@ private fun HomeBody(
     ){
         Training(
             modifier = Modifier.padding(16.dp),
-            addOnClick = { /*TODO*/ }
+            addOnClick = addOnClick
         )
 
         if (trainingList.isEmpty())
@@ -166,7 +169,7 @@ private fun TrainingItem(
     modifier: Modifier = Modifier
 ) {
     val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
-    val dateString = dateFormat.format(training.date)
+    //val dateString = dateFormat.format(training.date)
 
     Card (
         modifier = modifier
@@ -199,10 +202,10 @@ private fun TrainingItem(
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(Modifier.width(8.dp))
-                Text (
+                /*Text (
                     text = dateString,
                     style = MaterialTheme.typography.titleLarge.copy(fontSize = 14.sp)
-                )
+                )*/
             }
         }
     }
@@ -228,26 +231,22 @@ private fun Training(
             modifier = modifier
         )
 
-        Row(
-            modifier = modifier
-                .clickable { addOnClick }
-                .clip(RoundedCornerShape(25.dp))
-                .background(color = MaterialTheme.colorScheme.onTertiary)
-                .padding(horizontal = 10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.add_training_title),
-                tint = MaterialTheme.colorScheme.tertiary
-            )
+        Button(
+            onClick = addOnClick,
+            content = {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.add_training_title),
+                    tint = MaterialTheme.colorScheme.tertiary
+                )
 
-            Text(
-                text = stringResource(R.string.training),
-                color = MaterialTheme.colorScheme.tertiary,
-                style = MaterialTheme.typography.titleLarge,
-            )
-        }
+                Text(
+                    text = stringResource(R.string.training),
+                    color = MaterialTheme.colorScheme.tertiary,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            },
+        )
     }
 }
 

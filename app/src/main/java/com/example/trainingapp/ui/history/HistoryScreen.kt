@@ -125,12 +125,12 @@ private fun TrainingCalendar(
     modifier: Modifier = Modifier
 ) {
     val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-    val dateString = dateFormat.format(training.date)
+    /*val dateString = dateFormat.format(training.date)
 
     Text(
         text = dateString,
         modifier = modifier
-    )
+    )*/
 }
 
 @Composable

@@ -10,6 +10,18 @@
     <string name="trainings">Trainings</string>
     <string name="training">Training</string>
     <string name="my_trainings">My Trainings</string>
+    <string name="training_entry">Create training</string>
+    <string name="exercise_entry">Create exercise</string>
+
+    //Requests
+    <string name="save_action">Save</string>
+    <string name="add_exercise_action">Add exercise</string>
+
+    //Actions
+    <string name="training_name_req"> Training name*</string>
+    <string name="exercise_name_req">Exercise name*</string>
+    <string name="exercise_sets_req">Sets*</string>
+    <string name="exercise_reps_req">Reps*</string>
 
     //Icon descriptions
     <string name="add_training_title">Add training</string>

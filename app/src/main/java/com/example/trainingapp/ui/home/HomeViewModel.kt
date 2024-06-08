@@ -32,10 +32,10 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
             val allTrainings = trainingsRepository.getAllTrainingsStream().first()
 
             val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            val date1 = dateFormat.parse("25.04.2024")
+            val date1 = dateFormat.parse("10.02.2024")
             val training1 = Training(
-                name = "FullBody workout",
-                date = date1 ?: Date()
+                name = "Pull workout",
+                //date = date1 ?: Date()
             )
             trainingsRepository.insertTraining(training1)
 
@@ -52,11 +52,13 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
         }
     }
 
+
     /*
     init {
         addTraining()
     }
-    */
+
+     */
 }
 
 

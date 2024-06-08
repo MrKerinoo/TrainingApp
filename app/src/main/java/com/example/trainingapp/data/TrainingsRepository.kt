@@ -1,8 +1,8 @@
 package com.example.trainingapp.data
 
 import com.example.trainingapp.data.entities.Exercise
+import com.example.trainingapp.data.entities.Serie
 import com.example.trainingapp.data.entities.Training
-import com.example.trainingapp.data.entities.Set
 import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.flow.Flow
 
@@ -11,7 +11,7 @@ interface TrainingsRepository {
     // Training related methods
     fun getAllTrainingsStream() : Flow<List<Training>>
     fun getTrainingStream(id: Int) : Flow<Training?>
-    suspend fun insertTraining(training: Training)
+    suspend fun insertTraining(training: Training): Long
     suspend fun deleteTraining(training: Training)
     suspend fun updateTraining(training: Training)
 
@@ -23,12 +23,12 @@ interface TrainingsRepository {
     suspend fun deleteExercise(trainingId: Int, exerciseId: Int)
     suspend fun deleteAllExercises(trainingId: Int)
 
-    // Set related methods
-    fun getAllSetsStream() : Flow<List<Set>>
-    fun getSetsForExerciseStream(exerciseId: Int) : Flow<List<Set>>
-    fun getSetStream(id: Int) : Flow<Set?>
-    suspend fun insertSet(set: Set)
-    suspend fun updateSet(set: Set)
+    // Serie related methods
+    fun getAllSetsStream() : Flow<List<Serie>>
+    fun getSetsForExerciseStream(exerciseId: Int) : Flow<List<Serie>>
+    fun getSetStream(id: Int) : Flow<Serie?>
+    suspend fun insertSet(serie: Serie)
+    suspend fun updateSet(serie: Serie)
     suspend fun deleteSet(id: Int)
     suspend fun deleteSetsForExercise(exerciseId: Int)
 
