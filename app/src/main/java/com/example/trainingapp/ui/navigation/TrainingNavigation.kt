@@ -24,7 +24,7 @@ fun TrainingNavigation(
         composable(route = HomeDestination.route) {
             HomeScreen(
                 navigateToHistory = { navController.navigate(HistoryDestination.route) },
-                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateToHome = { /*DO NOTHING*/ },
                 navigateToProfile = { /*TODO*/ }
             )
         }
@@ -33,7 +33,7 @@ fun TrainingNavigation(
             HistoryScreen(
                 navigateToHome = { navController.navigate(HomeDestination.route) },
                 navigateToProfile = { /*TODO*/ },
-                navigateToHistory = { navController.navigate(HistoryDestination.route)}
+                navigateToHistory = { /*DO NOTHING*/ }
             )
         }
     }
