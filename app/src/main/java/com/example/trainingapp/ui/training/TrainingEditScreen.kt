@@ -24,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -103,7 +104,7 @@ fun TrainingEditScreen(
         TrainingEditBody(
             exercisesList = exerercisesUiState.exerciseList,
             trainingId = trainingId!!,
-            navigateToExerciseEntry = {trainingId.let { navigateToExerciseEntry(it!!) }},
+            navigateToExerciseEntry =  { navigateToExerciseEntry(it) },
             onExerciseClick = navigateToExerciseEdit,
             onDeleteTraining = {
                 coroutineScope.launch {
@@ -172,12 +173,31 @@ fun TrainingEditBody(
             }
         }
 
+
         //Delete training
         item {
+            val showDialog = remember { mutableStateOf(false) }
+
+            Button(
+                onClick = { showDialog.value = true },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.onError,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(dimensionResource(id = R.dimen.padding_extra_large))
+            )
+            {
+                Text(
+                    text = stringResource(R.string.delete_training_action),
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+
             DialogBody(
-                button = stringResource(R.string.delete_training_action),
                 question = stringResource(R.string.delete_training_question),
                 action = stringResource(R.string.delete_training_action),
+                showDialog = showDialog,
                 onClickYes = onDeleteTraining
             )
         }
@@ -258,29 +278,12 @@ private fun ExerciseItem (
 
 @Composable
 fun DialogBody(
-    button: String,
     onClickYes : () -> Unit,
     question: String,
     action: String,
+    showDialog: MutableState<Boolean>
 )
 {
-    val showDialog = remember { mutableStateOf(false) }
-    Button(
-        onClick = { showDialog.value = true },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.onError,
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(dimensionResource(id = R.dimen.padding_extra_large))
-    )
-    {
-        Text(
-            text = button,
-            color = MaterialTheme.colorScheme.error
-        )
-    }
-
     if (showDialog.value) {
         Dialog(onDismissRequest = { showDialog.value = false }) {
             // Use a layout composable like Box, Column, or Row to arrange your dialog elements

@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -98,11 +100,29 @@ fun ExerciseEditBody(
             onExerciseValueChange = onExerciseValueChange
         )
 
+        val showDialog = remember { mutableStateOf(false) }
+
+        Button(
+            onClick = { showDialog.value = true },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.onError,
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(id = R.dimen.padding_extra_large))
+        )
+        {
+            Text(
+                text = stringResource(R.string.delete_training_action),
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
         DialogBody(
-            button = stringResource(R.string.delete_exercise_action),
             onClickYes = onDeleteTraining,
             question = stringResource(R.string.delete_exercise_question),
-            action = stringResource(R.string.delete_exercise_action)
+            action = stringResource(R.string.delete_exercise_action),
+            showDialog = showDialog
         )
     }
 }

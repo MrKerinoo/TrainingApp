@@ -27,31 +27,11 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
         private const val TIMEOUT_MILLIS = 5_000L
     }
 
-    fun addTraining() {
+    fun deleteTraining(training: Training) {
         viewModelScope.launch {
-            val allTrainings = trainingsRepository.getAllTrainingsStream().first()
-
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            val date1 = dateFormat.parse("10.02.2024")
-            val training1 = Training(
-                name = "Pull workout",
-                //date = date1 ?: Date()
-            )
-            trainingsRepository.insertTraining(training1)
-
+            trainingsRepository.deleteTraining(training)
         }
     }
-
-    fun deleteAllTrainings() {
-        viewModelScope.launch {
-            val allTrainings = trainingsRepository.getAllTrainingsStream().first()
-
-            allTrainings.forEach { training ->
-                trainingsRepository.deleteTraining(training)
-            }
-        }
-    }
-
 }
 
 data class HomeUiState(val trainingList: List<Training> = listOf())
