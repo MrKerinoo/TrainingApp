@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.trainingapp.data.Converters
+import java.util.Date
 
 @Entity(
     tableName = "exercises",
@@ -23,5 +26,8 @@ data class Exercise(
     val name: String,
     val sets: Int,
     val reps: Int,
-    val weight: Float
+    val weight: Float,
+    @TypeConverters(Converters::class)
+    val dateAdded: Date = Date()
+
 )

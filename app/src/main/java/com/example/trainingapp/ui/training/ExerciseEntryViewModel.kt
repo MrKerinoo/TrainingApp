@@ -2,17 +2,24 @@ package com.example.trainingapp.ui.training
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class ExerciseEntryViewModel (
     savedStateHandle: SavedStateHandle,
+    private val trainingsRepository: TrainingsRepository,
 ) : ViewModel()
 {
     var exerciseUiState by mutableStateOf(ExerciseUiState())
         private set
+
 
     fun updateUiState(exerciseDetails: ExerciseDetails) {
         exerciseUiState = ExerciseUiState(
@@ -20,14 +27,15 @@ class ExerciseEntryViewModel (
             isEntryValid = validateInput(exerciseDetails))
     }
 
-    suspend fun saveExercise() {
+    suspend fun saveExercise(trainingId: Int) {
         if (validateInput()) {
+            trainingsRepository.insertExercise(exerciseUiState.exerciseDetails.toExercise(trainingId))
         }
     }
 
     private fun validateInput(uiState: ExerciseDetails = exerciseUiState.exerciseDetails): Boolean {
         return with(uiState) {
-            name.isNotBlank() && sets > 0 && reps > 0
+            name.isNotBlank() && sets.isNotBlank() && sets.toInt() > 0 && reps.isNotBlank() && reps.toInt() > 0
         }
     }
 }
@@ -38,9 +46,45 @@ data class ExerciseUiState(
 )
 
 data class ExerciseDetails(
+    val id: Int = 0,
     val name: String = "",
-    val sets: Int = 0,
-    val reps: Int = 0,
-    val weight: Float = 0f
+    val sets: String = "",
+    val reps: String = "",
+    val weight: String = "",
 )
 
+fun ExerciseDetails.toExercise(trainingId: Int): Exercise {
+    if (weight.isBlank()) {
+        return Exercise(
+            id = id,
+            name = name,
+            sets = sets.toInt(),
+            reps = reps.toInt(),
+            weight = 0f,
+            trainingId = trainingId
+        )
+    } else
+    {
+        return Exercise(
+            id = id,
+            name = name,
+            sets = sets.toInt(),
+            reps = reps.toInt(),
+            weight = weight.toFloat(),
+            trainingId = trainingId
+        )
+    }
+}
+
+fun Exercise.toExerciseUiState(isEntryValid: Boolean = false): ExerciseUiState = ExerciseUiState(
+    exerciseDetails = this.toExerciseDetails(),
+    isEntryValid = isEntryValid
+)
+
+fun Exercise.toExerciseDetails(): ExerciseDetails = ExerciseDetails(
+    id = id,
+    name = name,
+    sets = sets.toString(),
+    reps = reps.toString(),
+    weight = weight.toString(),
+)

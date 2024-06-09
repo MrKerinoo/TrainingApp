@@ -52,15 +52,6 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
         }
     }
 
-
-    /*
-    init {
-        addTraining()
-    }
-
-     */
 }
-
-
 
 data class HomeUiState(val trainingList: List<Training> = listOf())

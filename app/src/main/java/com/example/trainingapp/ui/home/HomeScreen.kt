@@ -63,6 +63,7 @@ fun HomeScreen(
     navigateToHome: () -> Unit,
     navigateToProfile: () ->Unit,
     navigateToTrainingEntry: () -> Unit,
+    navigateToTrainingEdit: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel : HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -88,7 +89,7 @@ fun HomeScreen(
     ) { innerPadding ->
         HomeBody(
             trainingList = homeUiState.trainingList,
-            onItemClick = { /*TODO*/ },
+            onTrainingClick = navigateToTrainingEdit,
             addOnClick = navigateToTrainingEntry,
             modifier = Modifier.padding(innerPadding)
         )
@@ -98,7 +99,7 @@ fun HomeScreen(
 @Composable
 private fun HomeBody(
     trainingList: List<Training>,
-    onItemClick: (Int) -> Unit,
+    onTrainingClick: (Int) -> Unit,
     addOnClick: () -> Unit,
     modifier: Modifier = Modifier,
 )
@@ -127,7 +128,7 @@ private fun HomeBody(
         {
             TrainingList(
                 trainingList = trainingList,
-                onItemClick = {onItemClick(it.id)},
+                onTrainingClick = {onTrainingClick(it.id)},
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -138,7 +139,7 @@ private fun HomeBody(
 @Composable
 private fun TrainingList(
     trainingList: List<Training>,
-    onItemClick: (Training) -> Unit,
+    onTrainingClick: (Training) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column {
@@ -156,7 +157,7 @@ private fun TrainingList(
             items(trainingList) { training ->
                 TrainingItem(training = training,
                     modifier = Modifier
-                        .clickable {onItemClick(training)})
+                        .clickable {onTrainingClick(training)})
             }
         }
     }

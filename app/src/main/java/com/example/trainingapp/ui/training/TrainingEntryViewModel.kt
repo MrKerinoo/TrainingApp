@@ -13,21 +13,12 @@ import kotlinx.coroutines.launch
 
 class TrainingEntryViewModel (
     savedStateHandle: SavedStateHandle,
-    private val trainingsRepository: TrainingsRepository,
+    private val trainingsRepository: TrainingsRepository
 ) : ViewModel()
 {
-    // Exercises
-    private val exercises = mutableListOf<Exercise>()
-
     // Trainings
     var trainingUiState by mutableStateOf(TrainingUiState())
         private set
-
-    fun validateInput(uiState: TrainingDetails  = trainingUiState.trainingDetails): Boolean {
-        return with(uiState) {
-            name.isNotBlank()
-        }
-    }
 
     fun updateUiState(trainingDetails: TrainingDetails) {
         trainingUiState = TrainingUiState(
@@ -38,18 +29,16 @@ class TrainingEntryViewModel (
     suspend fun saveTraining() {
         if (validateInput()) {
             viewModelScope.launch {
-                // Save the Training first to generate an ID
-                val trainingId = trainingsRepository.insertTraining(trainingUiState.trainingDetails.toTraining())
-
-                // Then save each Exercise, linking it to the Training using its ID
-                exercises.forEach { exercise ->
-                    val exerciseWithTrainingId = exercise.copy(trainingId = trainingId.toInt())
-                    trainingsRepository.insertExercise(exerciseWithTrainingId)
-                }
+                trainingsRepository.insertTraining(trainingUiState.trainingDetails.toTraining())
             }
         }
     }
 
+    fun validateInput(uiState: TrainingDetails  = trainingUiState.trainingDetails): Boolean {
+        return with(uiState) {
+            name.isNotBlank()
+        }
+    }
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }

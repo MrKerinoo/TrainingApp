@@ -13,7 +13,6 @@ class AppDataContainer(private val context: Context) : AppContainer {
             trainingDao = TrainingDatabase.getDatabase(context).trainingDao(),
             trainingHistoryDao = TrainingDatabase.getDatabase(context).historyDao(),
             exerciseDao = TrainingDatabase.getDatabase(context).exerciseDao(),
-            serieDao = TrainingDatabase.getDatabase(context).serieDao()
         )
     }
 }

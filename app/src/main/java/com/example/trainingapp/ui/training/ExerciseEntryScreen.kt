@@ -22,21 +22,27 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import com.example.trainingapp.R
 import com.example.trainingapp.TrainingAppTopAppBar
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
+import com.example.trainingapp.ui.training.TrainingEditDestination.trainingIdArg
 import kotlinx.coroutines.launch
 
 object ExerciseEntryScreenDestination : NavigationDestination {
     override val route: String = "exercise_entry"
     override val titleRes: Int = R.string.exercise_entry
+
+    const val trainingIdArg = "trainingId"
+    val routeWithArgs = "$route/{$trainingIdArg}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExerciseEntryScreen(
     navigateBack: () -> Unit,
+    trainingId: Int?,
     modifier: Modifier = Modifier,
     viewModel: ExerciseEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 )
@@ -55,7 +61,7 @@ fun ExerciseEntryScreen(
         bottomBar = {
             Button(
                 onClick = { coroutineScope.launch {
-                    viewModel.saveExercise()
+                    viewModel.saveExercise(trainingId!!)
                     navigateBack()
                 } },
                 enabled = exerciseUiState.isEntryValid,
@@ -133,8 +139,8 @@ fun ExerciseEntryForm(
         )
 
         OutlinedTextField(
-            value = exerciseUiState.exerciseDetails.sets.toString(),
-            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(sets = newValue.toInt()))},
+            value = exerciseUiState.exerciseDetails.sets,
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(sets = newValue))},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.exercise_sets_req)) },
             colors = OutlinedTextFieldDefaults.colors(
@@ -157,10 +163,34 @@ fun ExerciseEntryForm(
         )
 
         OutlinedTextField(
-            value = exerciseUiState.exerciseDetails.reps.toString(),
-            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(reps = newValue.toInt()))},
+            value = exerciseUiState.exerciseDetails.reps,
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(reps = newValue))},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.exercise_reps_req)) },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.primary,
+                focusedBorderColor = MaterialTheme.colorScheme.tertiary,
+                focusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+
+                unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+
+                disabledContainerColor = MaterialTheme.colorScheme.secondary,
+            ),
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center),
+            enabled = true,
+            singleLine = true
+        )
+
+        OutlinedTextField(
+            value = exerciseUiState.exerciseDetails.weight,
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(weight = newValue))},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            label = { Text(stringResource(R.string.exercise_weight_req)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.primary,
                 focusedBorderColor = MaterialTheme.colorScheme.tertiary,

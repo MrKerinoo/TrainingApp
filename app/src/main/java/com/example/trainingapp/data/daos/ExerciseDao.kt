@@ -1,6 +1,7 @@
 package com.example.trainingapp.data.daos
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,15 +17,15 @@ interface ExerciseDao {
     @Query("SELECT * from exercises WHERE id = :id")
     fun getExercise(id: Int): Flow<Exercise>
 
+    @Query("SELECT * FROM exercises WHERE trainingId = :trainingId ORDER BY dateAdded ASC")
+    fun getExercisesByTrainingId(trainingId: Int): Flow<List<Exercise>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercise(exercise: Exercise)
 
     @Update
     suspend fun updateExercise(exercise: Exercise)
 
-    @Query("DELETE FROM exercises WHERE trainingId = :trainingId AND id = :exerciseId")
-    suspend fun deleteExercise(trainingId: Int, exerciseId: Int)
-
-    @Query("DELETE FROM exercises WHERE trainingId = :trainingId")
-    suspend fun deleteAllExercices(trainingId: Int)
+    @Delete
+    suspend fun deleteExercise(exercise: Exercise)
 }

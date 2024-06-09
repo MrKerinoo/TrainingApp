@@ -12,16 +12,31 @@
     <string name="my_trainings">My Trainings</string>
     <string name="training_entry">Create training</string>
     <string name="exercise_entry">Create exercise</string>
+    <string name="training_edit">Edit training</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="exercise_edit">Edit exercise</string>
+    <string name="exercise">Exercise</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+    <string name="weight">Weight</string>
+
+    //Questions
+    <string name="delete_training_question">Do you really want to delete this training?</string>
+    <string name="delete_exercise_question">Do you really want to delete this exercise?</string>
 
     //Requests
     <string name="save_action">Save</string>
     <string name="add_exercise_action">Add exercise</string>
+    <string name="delete_training_action">Delete training</string>
+    <string name="delete_exercise_action">Delete exercise</string>
 
     //Actions
     <string name="training_name_req"> Training name*</string>
     <string name="exercise_name_req">Exercise name*</string>
     <string name="exercise_sets_req">Sets*</string>
     <string name="exercise_reps_req">Reps*</string>
+    <string name="exercise_weight_req">Weight*</string>
 
     //Icon descriptions
     <string name="add_training_title">Add training</string>

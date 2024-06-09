@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trainingapp.R
 import com.example.trainingapp.TrainingAppTopAppBar
-import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
@@ -75,7 +74,6 @@ fun TrainingEntryScreen(
         },
     ) { innerPadding ->
         TrainingEntryBody(
-            //exerciseList = viewModel.getExercises(),
             navigateToExerciseEntry = navigateToExerciseEntry,
             trainingUiState = trainingUiState,
             onTrainingValueChange = viewModel::updateUiState,
@@ -84,8 +82,7 @@ fun TrainingEntryScreen(
 }
 
 @Composable
-private fun TrainingEntryBody(
-    //exerciseList: List<Exercise>,
+fun TrainingEntryBody(
     trainingUiState: TrainingUiState,
     navigateToExerciseEntry: () -> Unit,
     onTrainingValueChange: (TrainingDetails) -> Unit,
@@ -101,30 +98,6 @@ private fun TrainingEntryBody(
             onTrainingValueChange = onTrainingValueChange,
             modifier = Modifier
         )
-
-        /*
-        exerciseList.forEach { exercise ->
-            Text(
-                text = exercise.name,
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
-         */
-
-        Button(
-            onClick = navigateToExerciseEntry,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onTertiary,
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-        {
-            Text(
-                text = stringResource(R.string.add_exercise_action),
-                color = MaterialTheme.colorScheme.tertiary
-            )
-        }
     }
 }
 
