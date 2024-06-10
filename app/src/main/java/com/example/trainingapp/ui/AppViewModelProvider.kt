@@ -17,7 +17,6 @@
 package com.example.trainingapp.ui
 
 import android.app.Application
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -26,8 +25,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.trainingapp.TrainingApplication
 import com.example.trainingapp.ui.history.HistoryViewModel
 import com.example.trainingapp.ui.home.HomeViewModel
-import com.example.trainingapp.ui.training.ExerciseEditViewModel
-import com.example.trainingapp.ui.training.ExerciseEntryViewModel
+import com.example.trainingapp.ui.exercise.ExerciseEditViewModel
+import com.example.trainingapp.ui.exercise.ExerciseEntryViewModel
 import com.example.trainingapp.ui.training.TrainingEditViewModel
 import com.example.trainingapp.ui.training.TrainingEntryViewModel
 

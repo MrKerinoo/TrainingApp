@@ -1,16 +1,13 @@
-package com.example.trainingapp.ui.training
+package com.example.trainingapp.ui.exercise
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
+import com.example.trainingapp.data.entities.ExerciseHistory
 
 class ExerciseEntryViewModel (
     savedStateHandle: SavedStateHandle,
@@ -76,6 +73,28 @@ fun ExerciseDetails.toExercise(trainingId: Int): Exercise {
     }
 }
 
+fun ExerciseDetails.toExerciseHistory(trainingHistoryId: Int): ExerciseHistory {
+    if (weight.isBlank()) {
+        return ExerciseHistory(
+            id = id,
+            name = name,
+            sets = sets.toInt(),
+            reps = reps.toInt(),
+            weight = 0f,
+            trainingId = trainingHistoryId
+        )
+    } else {
+        return ExerciseHistory(
+            id = id,
+            name = name,
+            sets = sets.toInt(),
+            reps = reps.toInt(),
+            weight = weight.toFloat(),
+            trainingId = trainingHistoryId
+        )
+    }
+}
+
 fun Exercise.toExerciseUiState(isEntryValid: Boolean = false): ExerciseUiState = ExerciseUiState(
     exerciseDetails = this.toExerciseDetails(),
     isEntryValid = isEntryValid
@@ -88,3 +107,4 @@ fun Exercise.toExerciseDetails(): ExerciseDetails = ExerciseDetails(
     reps = reps.toString(),
     weight = weight.toString(),
 )
+

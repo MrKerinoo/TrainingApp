@@ -1,4 +1,4 @@
-package com.example.trainingapp.ui.training
+package com.example.trainingapp.ui.exercise
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +21,7 @@ import com.example.trainingapp.R
 import com.example.trainingapp.TrainingAppTopAppBar
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
+import com.example.trainingapp.ui.training.DialogBody
 import kotlinx.coroutines.launch
 
 object ExerciseEditDestination : NavigationDestination {
@@ -46,8 +47,7 @@ fun ExerciseEditScreen(
         topBar = {
             TrainingAppTopAppBar(
                 title = stringResource(ExerciseEditDestination.titleRes),
-                canNavigateBack = true,
-                navigateUp = navigateBack
+                canNavigateBack = false
             )
         },
         bottomBar = {
@@ -113,7 +113,7 @@ fun ExerciseEditBody(
         )
         {
             Text(
-                text = stringResource(R.string.delete_training_action),
+                text = stringResource(R.string.delete_exercise_action),
                 color = MaterialTheme.colorScheme.error
             )
         }

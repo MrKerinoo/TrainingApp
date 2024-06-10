@@ -28,6 +28,7 @@ import com.example.trainingapp.R
 import com.example.trainingapp.TrainingAppBottomAppBar
 import com.example.trainingapp.TrainingAppTopAppBar
 import com.example.trainingapp.data.entities.Training
+import com.example.trainingapp.data.entities.TrainingHistory
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import java.text.SimpleDateFormat
@@ -78,7 +79,7 @@ fun HistoryScreen(
 
 @Composable
 private fun HistoryBody(
-    trainingList: List<Training>,
+    trainingList: List<TrainingHistory>,
     onItemClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -101,7 +102,7 @@ private fun HistoryBody(
 
 @Composable
 private fun MonthsList(
-    trainingList: List<Training>,
+    trainingList: List<TrainingHistory>,
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier
 ) {
@@ -121,16 +122,15 @@ private fun MonthsList(
 
 @Composable
 private fun TrainingCalendar(
-    training: Training,
+    training: TrainingHistory,
     modifier: Modifier = Modifier
 ) {
     val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-    /*val dateString = dateFormat.format(training.date)
+    val dateString = dateFormat.format(training.date)
 
     Text(
         text = dateString,
-        modifier = modifier
-    )*/
+        modifier = modifier)
 }
 
 @Composable

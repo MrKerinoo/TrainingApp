@@ -11,8 +11,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TrainingHistoryDao {
+
+    @Query("SELECT * FROM training_history")
+    fun getAllTrainingHistories(): Flow<List<TrainingHistory>>
+
+    @Query("SELECT * FROM training_history WHERE id = :id")
+    fun getTrainingHistory(id: Int): Flow<TrainingHistory>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(trainingHistory: TrainingHistory)
+    suspend fun insert(trainingHistory: TrainingHistory): Long
 
     @Update
     suspend fun update(trainingHistory: TrainingHistory)
@@ -20,9 +26,5 @@ interface TrainingHistoryDao {
     @Delete
     suspend fun delete(trainingHistory: TrainingHistory)
 
-    @Query("SELECT * FROM history")
-    fun getAllTrainingHistories(): Flow<List<TrainingHistory>>
 
-    @Query("SELECT * FROM history WHERE id = :id")
-    fun getTrainingHistory(id: Int): Flow<TrainingHistory>
 }

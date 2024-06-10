@@ -1,7 +1,9 @@
 package com.example.trainingapp.data
 
 import com.example.trainingapp.data.entities.Exercise
+import com.example.trainingapp.data.entities.ExerciseHistory
 import com.example.trainingapp.data.entities.Training
+import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.flow.Flow
 
 interface TrainingsRepository {
@@ -21,4 +23,17 @@ interface TrainingsRepository {
     suspend fun updateExercise(exercise: Exercise)
     suspend fun deleteExercise(exercise: Exercise)
 
+    // TrainingHistory related methods
+    fun getAllTrainingHistoriesStream() : Flow<List<TrainingHistory>>
+    fun getTrainingHistoryStream(id: Int) : Flow<TrainingHistory?>
+    suspend fun insertTrainingHistory(trainingHistory: TrainingHistory): Long
+    suspend fun updateTrainingHistory(trainingHistory: TrainingHistory)
+    suspend fun deleteTrainingHistory(trainingHistory: TrainingHistory)
+
+    // ExerciseHistory related methods
+    fun getAllExerciseHistoriesStream() : Flow<List<ExerciseHistory>>
+    fun getExerciseHistoryStream(id: Int) : Flow<ExerciseHistory?>
+    fun getExerciseHistoriesForTrainingStream(trainingId: Int) : Flow<List<ExerciseHistory>>
+    suspend fun insertExerciseHistory(exerciseHistory: ExerciseHistory)
+    suspend fun deleteExerciseHistory(exerciseHistory: ExerciseHistory)
 }

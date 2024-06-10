@@ -1,5 +1,6 @@
 package com.example.trainingapp.ui.training
 
+import android.os.CountDownTimer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,12 +25,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -43,13 +46,16 @@ import com.example.trainingapp.TrainingAppTopAppBar
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 object TrainingEditDestination : NavigationDestination {
     override val route: String = "training_edit"
     override val titleRes: Int = R.string.training_edit
     const val trainingIdArg = "trainingId"
-    val routeWithArgs = "$route/{$trainingIdArg}"
+    val routeWithArgs = "${route}/{${trainingIdArg}}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,9 +80,8 @@ fun TrainingEditScreen(
         topBar = {
             TrainingAppTopAppBar(
                 title = stringResource(TrainingEditDestination.titleRes),
-                canNavigateBack = true,
-                scrollBehavior = scrollBehavior,
-                navigateUp = navigateBack
+                canNavigateBack = false,
+                scrollBehavior = scrollBehavior
             )
         },
         bottomBar = {
@@ -135,9 +140,16 @@ fun TrainingEditBody(
         modifier = modifier,
         contentPadding = PaddingValues (0.dp)
     ){
+
+        //Timer
+        item {
+            //TimerScreen()
+        }
+
+
+        //Training entry
         item {
             TrainingEntryBody(
-                navigateToExerciseEntry = { navigateToExerciseEntry(trainingId) },
                 trainingUiState = trainingUiState,
                 onTrainingValueChange = onTrainingValueChange,
                 modifier = Modifier
@@ -149,7 +161,7 @@ fun TrainingEditBody(
             ExerciseItem(
                 exercise = exercise,
                 modifier = Modifier
-                    .clickable {onExerciseClick(exercise.id)}
+                    .clickable { onExerciseClick(exercise.id) }
                     .padding(dimensionResource(id = R.dimen.padding_large))
             )
         }
@@ -163,7 +175,10 @@ fun TrainingEditBody(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 0.dp, horizontal = dimensionResource(id = R.dimen.padding_extra_large))
+                    .padding(
+                        vertical = 0.dp,
+                        horizontal = dimensionResource(id = R.dimen.padding_extra_large)
+                    )
             )
             {
                 Text(
@@ -203,6 +218,8 @@ fun TrainingEditBody(
         }
     }
 }
+
+
 
 @Composable
 private fun InfoBody(

@@ -2,25 +2,25 @@ package com.example.trainingapp.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.H
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.ui.history.HistoryDestination
 import com.example.trainingapp.ui.history.HistoryScreen
 import com.example.trainingapp.ui.home.HomeDestination
 import com.example.trainingapp.ui.home.HomeScreen
-import com.example.trainingapp.ui.training.ExerciseEditDestination
-import com.example.trainingapp.ui.training.ExerciseEditScreen
-import com.example.trainingapp.ui.training.ExerciseEntryScreen
-import com.example.trainingapp.ui.training.ExerciseEntryScreenDestination
+import com.example.trainingapp.ui.exercise.ExerciseEditDestination
+import com.example.trainingapp.ui.exercise.ExerciseEditScreen
+import com.example.trainingapp.ui.exercise.ExerciseEntryScreen
+import com.example.trainingapp.ui.exercise.ExerciseEntryScreenDestination
 import com.example.trainingapp.ui.training.TrainingEditDestination
 import com.example.trainingapp.ui.training.TrainingEditScreen
 import com.example.trainingapp.ui.training.TrainingEntryScreen
 import com.example.trainingapp.ui.training.TrainingEntryScreenDestination
+import com.example.trainingapp.ui.training.TrainingStartWorkoutDestination
+import com.example.trainingapp.ui.training.TrainingStartWorkoutScreen
 
 @Composable
 fun TrainingNavigation(
@@ -39,7 +39,9 @@ fun TrainingNavigation(
                 navigateToProfile = { /*TODO*/ },
                 navigateToTrainingEntry = { navController.navigate(TrainingEntryScreenDestination.route) },
                 navigateToTrainingEdit = {
-                    navController.navigate("${TrainingEditDestination.route}/$it")}
+                    navController.navigate("${TrainingEditDestination.route}/$it")},
+                navigateToTrainingStartWorkout = {
+                    navController.navigate("${TrainingStartWorkoutDestination.route}/$it")}
             )
         }
 
@@ -103,6 +105,25 @@ fun TrainingNavigation(
         ) {
             ExerciseEditScreen(
                 navigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = TrainingStartWorkoutDestination.routeWithArgs,
+            arguments = listOf(navArgument(TrainingEditDestination.trainingIdArg) {
+                type = NavType.IntType
+            })
+        ) { backStackEntry ->
+            val trainingId = backStackEntry.arguments?.getInt(TrainingEditDestination.trainingIdArg)
+            TrainingStartWorkoutScreen(
+                navigateBack = { navController.popBackStack() },
+                navigateToExerciseEntry = {
+                    navController.navigate("${ExerciseEntryScreenDestination.route}/$trainingId")
+                },
+                navigateToExerciseEdit = { exerciseId ->
+                    navController.navigate("${ExerciseEditDestination.route}/$trainingId/$exerciseId")
+                },
+                navBackStackEntry = backStackEntry //ID training
             )
         }
     }

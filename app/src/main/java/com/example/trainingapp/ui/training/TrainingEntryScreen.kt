@@ -74,7 +74,6 @@ fun TrainingEntryScreen(
         },
     ) { innerPadding ->
         TrainingEntryBody(
-            navigateToExerciseEntry = navigateToExerciseEntry,
             trainingUiState = trainingUiState,
             onTrainingValueChange = viewModel::updateUiState,
             modifier = Modifier.padding(innerPadding))
@@ -84,7 +83,6 @@ fun TrainingEntryScreen(
 @Composable
 fun TrainingEntryBody(
     trainingUiState: TrainingUiState,
-    navigateToExerciseEntry: () -> Unit,
     onTrainingValueChange: (TrainingDetails) -> Unit,
     modifier: Modifier = Modifier
 ) {

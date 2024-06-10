@@ -21,18 +21,23 @@
     <string name="reps">Reps</string>
     <string name="weight">Weight</string>
     <string name="start_training">Start training</string>
+    <string name="secods">secods</string>
+    <string name="timer">Timer</string>
 
     //Questions
     <string name="delete_training_question">Do you really want to delete this training?</string>
     <string name="delete_exercise_question">Do you really want to delete this exercise?</string>
 
-    //Requests
+
+    //Actions
     <string name="save_action">Save</string>
     <string name="add_exercise_action">Add exercise</string>
     <string name="delete_training_action">Delete training</string>
     <string name="delete_exercise_action">Delete exercise</string>
+    <string name="finish_training_action">Finish training</string>
+    <string name="cancel_workout_action">Cancel workout</string>
 
-    //Actions
+    //Requests
     <string name="training_name_req"> Training name*</string>
     <string name="exercise_name_req">Exercise name*</string>
     <string name="exercise_sets_req">Sets*</string>

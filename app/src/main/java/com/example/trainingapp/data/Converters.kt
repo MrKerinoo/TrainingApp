@@ -16,18 +16,4 @@ class Converters {
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
     }
-
-    @TypeConverter
-    fun fromExerciseList(exercises: List<Exercise>): String {
-        val gson = Gson()
-        val type = object : TypeToken<List<Exercise>>() {}.type
-        return gson.toJson(exercises, type)
-    }
-
-    @TypeConverter
-    fun toExerciseList(exercisesString: String): List<Exercise> {
-        val gson = Gson()
-        val type = object : TypeToken<List<Exercise>>() {}.type
-        return gson.fromJson(exercisesString, type)
-    }
 }

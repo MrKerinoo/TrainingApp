@@ -78,6 +78,7 @@ fun HomeScreen(
     navigateToProfile: () ->Unit,
     navigateToTrainingEntry: () -> Unit,
     navigateToTrainingEdit: (Int) -> Unit,
+    navigateToTrainingStartWorkout: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel : HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -104,7 +105,8 @@ fun HomeScreen(
         HomeBody(
             trainingList = homeUiState.trainingList,
             onDeleteClick = { training -> viewModel.deleteTraining(training)},
-            onTrainingClick = navigateToTrainingEdit,
+            onTrainingClick = navigateToTrainingStartWorkout,
+            onEditClick = navigateToTrainingEdit,
             addOnClick = navigateToTrainingEntry,
             modifier = Modifier.padding(innerPadding)
         )
@@ -115,6 +117,7 @@ fun HomeScreen(
 private fun HomeBody(
     onDeleteClick: (Training) -> Unit,
     trainingList: List<Training>,
+    onEditClick: (Int) -> Unit,
     onTrainingClick: (Int) -> Unit,
     addOnClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -144,7 +147,8 @@ private fun HomeBody(
         {
             TrainingList(
                 trainingList = trainingList,
-                onTrainingClick = {onTrainingClick(it.id)},
+                onEditClick = {onEditClick(it.id)},
+                onTrainingClick = onTrainingClick,
                 onDeleteClick = onDeleteClick,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,8 +160,9 @@ private fun HomeBody(
 @Composable
 private fun TrainingList(
     trainingList: List<Training>,
-    onTrainingClick: (Training) -> Unit,
+    onEditClick: (Training) -> Unit,
     onDeleteClick: (Training) -> Unit,
+    onTrainingClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column {
@@ -167,7 +172,7 @@ private fun TrainingList(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier
-            )
+        )
         LazyVerticalGrid(
             modifier = modifier,
             columns = GridCells.Fixed(2))
@@ -176,7 +181,8 @@ private fun TrainingList(
                 TrainingItem(
                     training = training,
                     onDeleteClick = {onDeleteClick(training)},
-                    onEditClick = {onTrainingClick(training)},
+                    onEditClick = {onEditClick(training)},
+                    onTrainingClick = {onTrainingClick(training.id)},
                     modifier = Modifier)
             }
         }
@@ -189,6 +195,7 @@ private fun TrainingItem(
     training: Training,
     onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
+    onTrainingClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
@@ -199,8 +206,9 @@ private fun TrainingItem(
             .fillMaxWidth()
             .height(200.dp)
             .padding(16.dp)
-            .border(1.dp, MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(25.dp)),
-        shape = RoundedCornerShape(25.dp), // make corners rounded
+            .border(1.dp, MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(25.dp))
+            .clickable(onClick = onTrainingClick),
+        shape = RoundedCornerShape(25.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary,
@@ -234,7 +242,7 @@ private fun TrainingItem(
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = stringResource(R.string.more_title)
-                        )
+                    )
                 }
             }
 
@@ -334,8 +342,8 @@ private fun TrainingMenu(
 
 @Composable
 private fun Training(
-  modifier: Modifier = Modifier,
-  addOnClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    addOnClick: () -> Unit,
 ) {
     Row (
         modifier = modifier

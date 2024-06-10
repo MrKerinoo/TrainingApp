@@ -1,4 +1,4 @@
-package com.example.trainingapp.ui.training
+package com.example.trainingapp.ui.exercise
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -8,7 +8,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.TrainingsRepository
-import com.example.trainingapp.data.entities.Exercise
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

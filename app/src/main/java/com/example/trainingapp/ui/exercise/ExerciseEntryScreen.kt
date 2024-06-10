@@ -1,4 +1,4 @@
-package com.example.trainingapp.ui.training
+package com.example.trainingapp.ui.exercise
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,12 +22,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
 import com.example.trainingapp.R
 import com.example.trainingapp.TrainingAppTopAppBar
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
-import com.example.trainingapp.ui.training.TrainingEditDestination.trainingIdArg
 import kotlinx.coroutines.launch
 
 object ExerciseEntryScreenDestination : NavigationDestination {

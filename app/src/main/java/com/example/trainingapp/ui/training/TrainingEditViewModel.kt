@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
+import com.example.trainingapp.ui.exercise.toExerciseDetails
+import com.example.trainingapp.ui.exercise.toExerciseHistory
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -52,6 +54,17 @@ class TrainingEditViewModel(
     suspend fun updateTraining() {
         if (validateInput(trainigUiState.trainingDetails)) {
             trainingsRepository.updateTraining(trainigUiState.trainingDetails.toTraining())
+        }
+    }
+
+    //History database
+    suspend fun insertTrainingHistory() {
+        if (validateInput(trainigUiState.trainingDetails)) {
+            val trainingHistoryId = trainingsRepository.insertTrainingHistory(trainigUiState.trainingDetails.toTrainingHistory())
+
+            exercisesUiState.value.exerciseList.forEach() { exercise ->
+                trainingsRepository.insertExerciseHistory(exercise.toExerciseDetails().toExerciseHistory(trainingHistoryId.toInt()))
+            }
         }
     }
 

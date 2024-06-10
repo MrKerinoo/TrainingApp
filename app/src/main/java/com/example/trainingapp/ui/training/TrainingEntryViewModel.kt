@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.data.entities.Training
+import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.launch
 
 class TrainingEntryViewModel (
@@ -56,6 +57,10 @@ data class TrainingDetails(
 
 fun TrainingDetails.toTraining(): Training = Training(
     id = id,
+    name = name
+)
+
+fun TrainingDetails.toTrainingHistory(): TrainingHistory = TrainingHistory(
     name = name
 )
 

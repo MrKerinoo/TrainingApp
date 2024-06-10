@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.TrainingsRepository
+import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -16,7 +17,7 @@ class HistoryViewModel(
     ) : ViewModel() {
 
     val historyUiState: StateFlow<HistoryUiState> =
-        trainingsRepository.getAllTrainingsStream().map { HistoryUiState(it) }
+        trainingsRepository.getAllTrainingHistoriesStream().map { HistoryUiState(it) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -30,5 +31,5 @@ class HistoryViewModel(
 
 
 data class HistoryUiState(
-    val trainingList: List<Training> = listOf()
+    val trainingList: List<TrainingHistory> = listOf()
 )

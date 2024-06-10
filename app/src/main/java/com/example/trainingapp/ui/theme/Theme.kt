@@ -20,6 +20,9 @@ private val DarkColorScheme = darkColorScheme(
     error = Red80,
     onError = DarkRed,
 
+    primaryContainer = Green80,
+    onPrimaryContainer = DarkGreen,
+
     onPrimary = White80,
     onSecondary = Black80,
     onTertiary = DarkOrange80
