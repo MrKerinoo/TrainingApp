@@ -27,6 +27,7 @@ import com.example.trainingapp.ui.history.HistoryViewModel
 import com.example.trainingapp.ui.home.HomeViewModel
 import com.example.trainingapp.ui.exercise.ExerciseEditViewModel
 import com.example.trainingapp.ui.exercise.ExerciseEntryViewModel
+import com.example.trainingapp.ui.profile.UserViewModel
 import com.example.trainingapp.ui.training.TrainingEditViewModel
 import com.example.trainingapp.ui.training.TrainingEntryViewModel
 
@@ -41,6 +42,12 @@ object AppViewModelProvider {
 
         initializer {
             HistoryViewModel(
+                this.createSavedStateHandle(),
+                trainingApplication().container.trainingsRepository)
+        }
+
+        initializer {
+            UserViewModel(
                 this.createSavedStateHandle(),
                 trainingApplication().container.trainingsRepository)
         }

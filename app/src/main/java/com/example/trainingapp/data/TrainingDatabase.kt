@@ -9,18 +9,21 @@ import com.example.trainingapp.data.daos.ExerciseDao
 import com.example.trainingapp.data.daos.ExerciseHistoryDao
 import com.example.trainingapp.data.daos.TrainingDao
 import com.example.trainingapp.data.daos.TrainingHistoryDao
+import com.example.trainingapp.data.daos.UserDao
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.data.entities.ExerciseHistory
 import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.entities.TrainingHistory
+import com.example.trainingapp.data.entities.User
 
-@Database(entities = [Training::class, Exercise::class, TrainingHistory::class, ExerciseHistory::class], version = 12, exportSchema = false)
+@Database(entities = [Training::class, Exercise::class, TrainingHistory::class, ExerciseHistory::class, User::class], version = 19, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class TrainingDatabase : RoomDatabase() {
     abstract fun trainingDao(): TrainingDao
     abstract fun exerciseDao(): ExerciseDao
     abstract fun historyDao(): TrainingHistoryDao
     abstract fun exerciseHistoryDao(): ExerciseHistoryDao
+    abstract fun profileDao(): UserDao
 
     companion object {
         @Volatile

@@ -3,6 +3,7 @@ package com.example.trainingapp.ui.training
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -96,32 +97,39 @@ fun TrainingStartWorkoutScreen (
 
         },
     ) { innerPadding ->
-        TrainingStartWorkoutBody(
-            exercisesList = exerercisesUiState.exerciseList,
-            trainingId = trainingId!!,
-            navigateToExerciseEntry =  { navigateToExerciseEntry(it) },
-            navigateBack = navigateBack,
-            updateTraining = {
-                coroutineScope.launch {
-                    viewModel.updateTraining()
-                }
-            },
-            insertTrainingHistory = {
-                coroutineScope.launch {
-                    viewModel.insertTrainingHistory()
-                }
-            },
-            onExerciseClick = navigateToExerciseEdit,
-            onDeleteTraining = {
-                coroutineScope.launch {
-                    viewModel.deleteTraining()
-                    navigateBack()
-                } },
-            onTrainingValueChange = viewModel::updateUiState,
-            trainingUiState = trainingUiState,
-            modifier = Modifier.padding(innerPadding)
-        )
-
+        Box (
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            TrainingStartWorkoutBody(
+                exercisesList = exerercisesUiState.exerciseList,
+                trainingId = trainingId!!,
+                navigateToExerciseEntry = { navigateToExerciseEntry(it) },
+                navigateBack = navigateBack,
+                updateTraining = {
+                    coroutineScope.launch {
+                        viewModel.updateTraining()
+                    }
+                },
+                insertTrainingHistory = {
+                    coroutineScope.launch {
+                        viewModel.insertTrainingHistory()
+                    }
+                },
+                onExerciseClick = navigateToExerciseEdit,
+                onDeleteTraining = {
+                    coroutineScope.launch {
+                        viewModel.deleteTraining()
+                        navigateBack()
+                    }
+                },
+                onTrainingValueChange = viewModel::updateUiState,
+                trainingUiState = trainingUiState,
+                modifier = Modifier
+            )
+        }
     }
 }
 

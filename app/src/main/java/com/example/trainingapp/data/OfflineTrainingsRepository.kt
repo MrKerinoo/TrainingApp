@@ -4,8 +4,10 @@ import com.example.trainingapp.data.daos.ExerciseDao
 import com.example.trainingapp.data.daos.ExerciseHistoryDao
 import com.example.trainingapp.data.daos.TrainingDao
 import com.example.trainingapp.data.daos.TrainingHistoryDao
+import com.example.trainingapp.data.daos.UserDao
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.data.entities.ExerciseHistory
+import com.example.trainingapp.data.entities.User
 import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.flow.Flow
@@ -14,10 +16,14 @@ class OfflineTrainingsRepository(
     private val trainingDao: TrainingDao,
     private val exerciseDao: ExerciseDao,
     private val trainingHistoryDao: TrainingHistoryDao,
-    private val exerciseHistoryDao: ExerciseHistoryDao
+    private val exerciseHistoryDao: ExerciseHistoryDao,
+    private val profileDao: UserDao
 
 ) : TrainingsRepository {
 
+    // Database methods
+    override suspend fun deleteDatabase() = trainingDao.deleteDatabase()
+    override suspend fun deleteHistoryDatabase() = trainingHistoryDao.deleteDatabase()
     // Training methods
     override fun getAllTrainingsStream(): Flow<List<Training>> = trainingDao.getAllItems()
     override fun getTrainingStream(id: Int): Flow<Training?> = trainingDao.getItem(id)
@@ -41,9 +47,17 @@ class OfflineTrainingsRepository(
     override suspend fun updateTrainingHistory(trainingHistory: TrainingHistory) = trainingHistoryDao.update(trainingHistory)
     override suspend fun deleteTrainingHistory(trainingHistory: TrainingHistory) = trainingHistoryDao.delete(trainingHistory)
 
+    // ExerciseHistory methods
     override fun getAllExerciseHistoriesStream(): Flow<List<ExerciseHistory>> = exerciseHistoryDao.getAllExercisesHistory()
     override fun getExerciseHistoryStream(id: Int): Flow<ExerciseHistory?> = exerciseHistoryDao.getExercisegetAllExercisesHistory(id)
     override fun getExerciseHistoriesForTrainingStream(trainingId: Int): Flow<List<ExerciseHistory>> = exerciseHistoryDao.getExercisesByTrainingIdHistory(trainingId)
     override suspend fun insertExerciseHistory(exerciseHistory: ExerciseHistory) = exerciseHistoryDao.insertExerciseHistory(exerciseHistory)
     override suspend fun deleteExerciseHistory(exerciseHistory: ExerciseHistory) = exerciseHistoryDao.deleteExerciseHistory(exerciseHistory)
+
+    // Profile methods
+
+    override fun getUserStream(): Flow<User?> = profileDao.getUser()
+    override suspend fun insertUser(user: User) = profileDao.insertUser(user)
+    override suspend fun updateUser(user: User) = profileDao.updateUser(user)
+    override suspend fun deleteUser(user: User) = profileDao.deletUser(user)
 }

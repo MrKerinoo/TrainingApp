@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExerciseHistoryDao {
-    @Query("SELECT * FROM exercises ORDER BY name ASC")
+    @Query("SELECT * FROM exercises_history ORDER BY name ASC")
     fun getAllExercisesHistory(): Flow<List<ExerciseHistory>>
 
-    @Query("SELECT * from exercises WHERE id = :id")
+    @Query("SELECT * from exercises_history WHERE id = :id")
     fun getExercisegetAllExercisesHistory(id: Int): Flow<ExerciseHistory>
 
-    @Query("SELECT * FROM exercises WHERE trainingId = :trainingId ORDER BY dateAdded ASC")
+    @Query("SELECT * FROM exercises_history WHERE trainingId = :trainingId ORDER BY dateAdded ASC")
     fun getExercisesByTrainingIdHistory(trainingId: Int): Flow<List<ExerciseHistory>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

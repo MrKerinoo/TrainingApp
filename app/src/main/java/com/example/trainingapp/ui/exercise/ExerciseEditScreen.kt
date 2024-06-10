@@ -1,6 +1,9 @@
 package com.example.trainingapp.ui.exercise
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -72,16 +75,24 @@ fun ExerciseEditScreen(
         },
         modifier = modifier
     ) {innerPadding ->
-        ExerciseEditBody(
-            onDeleteTraining = {
-                coroutineScope.launch {
-                    viewModel.deleteExercise()
-                    navigateBack()
-                } },
-            exerciseUiState = exerciseUiState,
-            onExerciseValueChange = viewModel::updateUiState,
-            modifier = Modifier.padding(innerPadding)
-        )
+        Box (
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            ExerciseEditBody(
+                onDeleteTraining = {
+                    coroutineScope.launch {
+                        viewModel.deleteExercise()
+                        navigateBack()
+                    }
+                },
+                exerciseUiState = exerciseUiState,
+                onExerciseValueChange = viewModel::updateUiState,
+                modifier = Modifier
+            )
+        }
     }
 }
 

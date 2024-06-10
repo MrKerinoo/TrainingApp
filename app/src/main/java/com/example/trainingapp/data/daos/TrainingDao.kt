@@ -27,5 +27,6 @@ interface TrainingDao {
     @Delete
     suspend fun delete(training: Training)
 
-
+    @Query("DELETE FROM trainings")
+    suspend fun deleteDatabase()
 }

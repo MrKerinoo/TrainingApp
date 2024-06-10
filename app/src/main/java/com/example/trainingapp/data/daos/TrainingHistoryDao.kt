@@ -26,5 +26,6 @@ interface TrainingHistoryDao {
     @Delete
     suspend fun delete(trainingHistory: TrainingHistory)
 
-
+    @Query("DELETE FROM training_history")
+    suspend fun deleteDatabase()
 }

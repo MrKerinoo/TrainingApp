@@ -1,7 +1,6 @@
 package com.example.trainingapp.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -14,8 +13,29 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Black80,
-    secondary = White80,
+    secondary = Grey80,
     tertiary = Orange80,
+
+    onPrimary = White80,
+    onSecondary = DarkGrey,
+    onTertiary = DarkOrange80,
+
+    error = Red80,
+    onError = DarkRed,
+
+    primaryContainer = Green80,
+    onPrimaryContainer = DarkGreen,
+)
+
+private val LightColorScheme = lightColorScheme(
+
+    primary = White80,
+    secondary = Black80,
+    tertiary = Orange80,
+
+    onPrimary = Black80,
+    onSecondary = White80,
+    onTertiary = DarkOrange80,
 
     error = Red80,
     onError = DarkRed,
@@ -23,28 +43,6 @@ private val DarkColorScheme = darkColorScheme(
     primaryContainer = Green80,
     onPrimaryContainer = DarkGreen,
 
-    onPrimary = White80,
-    onSecondary = Black80,
-    onTertiary = DarkOrange80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = White80,
-    secondary = Black80,
-    tertiary = Orange80,
-    onPrimary = Black80,
-    onSecondary = White80,
-    onTertiary = DarkOrange80
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable

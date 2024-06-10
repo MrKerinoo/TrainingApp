@@ -10,3 +10,5 @@ val Red80 = Color(0xFFD32F2F) // Red color
 val DarkRed = Red80.copy(alpha = 0.2f) // Darken the red color
 val Green80 = Color(0xFF388E3C) // Green color
 val DarkGreen = Green80.copy(alpha = 0.2f) // Darken the green color
+val Grey80 = Color(0xFF9E9E9E) // Grey color
+val DarkGrey = Grey80.copy(alpha = 0.2f) // Darken the grey color

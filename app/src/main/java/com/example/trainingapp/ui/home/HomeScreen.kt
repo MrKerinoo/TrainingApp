@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -23,7 +23,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -47,11 +47,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -74,7 +71,6 @@ object HomeDestination : NavigationDestination {
 @Composable
 fun HomeScreen(
     navigateToHistory: () -> Unit,
-    navigateToHome: () -> Unit,
     navigateToProfile: () ->Unit,
     navigateToTrainingEntry: () -> Unit,
     navigateToTrainingEdit: (Int) -> Unit,
@@ -97,19 +93,28 @@ fun HomeScreen(
         bottomBar = {
             TrainingAppBottomAppBar(
                 navigateToHistory = navigateToHistory,
-                navigateToHome = navigateToHome,
+                navigateToHome = { /* DO NOTHING */ },
                 navigateToProfile = navigateToProfile
             )
         },
     ) { innerPadding ->
-        HomeBody(
-            trainingList = homeUiState.trainingList,
-            onDeleteClick = { training -> viewModel.deleteTraining(training)},
-            onTrainingClick = navigateToTrainingStartWorkout,
-            onEditClick = navigateToTrainingEdit,
-            addOnClick = navigateToTrainingEntry,
-            modifier = Modifier.padding(innerPadding)
-        )
+
+        Box (
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            HomeBody(
+                trainingList = homeUiState.trainingList,
+                onDeleteClick = { training -> viewModel.deleteTraining(training)},
+                onTrainingClick = navigateToTrainingStartWorkout,
+                onEditClick = navigateToTrainingEdit,
+                addOnClick = navigateToTrainingEntry,
+                modifier = Modifier
+            )
+        }
+
     }
 }
 
@@ -124,8 +129,7 @@ private fun HomeBody(
 )
 {
     Column (
-        modifier = modifier
-            .wrapContentSize(Alignment.Center),
+        modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -140,8 +144,12 @@ private fun HomeBody(
             Text (
                 text = stringResource(R.string.no_training),
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.secondary,
                 fontSize = 30.sp,
                 style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 223.dp)
             )
         } else
         {
@@ -167,9 +175,10 @@ private fun TrainingList(
 ) {
     Column {
         Text(
-            text = "${stringResource(R.string.my_trainings)}(${trainingList.size})",
+            text = "${stringResource(R.string.my_trainings)} (${trainingList.size})",
             color = MaterialTheme.colorScheme.onPrimary,
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier
         )
@@ -206,7 +215,7 @@ private fun TrainingItem(
             .fillMaxWidth()
             .height(200.dp)
             .padding(16.dp)
-            .border(1.dp, MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(25.dp))
+            .border(2.dp, MaterialTheme.colorScheme.secondary, RoundedCornerShape(25.dp))
             .clickable(onClick = onTrainingClick),
         shape = RoundedCornerShape(25.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -230,20 +239,30 @@ private fun TrainingItem(
             {
                 Text (
                     text = training.name,
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
+                    style = MaterialTheme.typography.titleSmall,
                     textAlign = TextAlign.Start,
                 )
 
-                IconButton(
-                    onClick = { expanded.value = !expanded.value },
+                Box (
                     modifier = Modifier
-                )
-                {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = stringResource(R.string.more_title)
+                        .clip(RoundedCornerShape(25.dp))
+                        .background(MaterialTheme.colorScheme.onTertiary)
+                        .size(30.dp)
+                ) {
+                    IconButton(
+                        onClick = { expanded.value = !expanded.value },
                     )
+                    {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = stringResource(R.string.more_title),
+                            tint = MaterialTheme.colorScheme.tertiary,
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
                 }
+
             }
 
             TrainingMenu(
@@ -258,9 +277,11 @@ private fun TrainingItem(
                 Icon(
                     imageVector = Icons.Default.DateRange,
                     contentDescription = stringResource(R.string.calendar_title),
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.secondary
                 )
-                Spacer(Modifier.width(8.dp))
+
+                Spacer(Modifier.weight(1f))
+
                 /*Text (
                     text = dateString,
                     style = MaterialTheme.typography.titleLarge.copy(fontSize = 14.sp)
@@ -283,9 +304,9 @@ private fun TrainingMenu(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.primary)
-                .border(2.dp, MaterialTheme.colorScheme.tertiary, RoundedCornerShape(25.dp)),
-            offset = DpOffset(110.dp,-50.dp)
+                .clip(RoundedCornerShape(25.dp))
+                .background(MaterialTheme.colorScheme.onSecondary)
+                .border(2.dp, MaterialTheme.colorScheme.onPrimary, RoundedCornerShape(25.dp)),
         ) {
 
             DropdownMenuItem(
@@ -356,25 +377,36 @@ private fun Training(
             color = MaterialTheme.colorScheme.onPrimary,
             textAlign = TextAlign.Left,
             fontSize = 25.sp,
+            fontWeight = FontWeight.ExtraBold,
             style = MaterialTheme.typography.titleLarge,
             modifier = modifier
         )
 
-        Button(
-            onClick = addOnClick,
-            content = {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.add_training_title),
-                    tint = MaterialTheme.colorScheme.tertiary
-                )
-
-                Text(
-                    text = stringResource(R.string.training),
+        Box (
+            modifier = Modifier
+                .border(
+                    width = 3.dp,
                     color = MaterialTheme.colorScheme.tertiary,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-            },
-        )
+                    shape = RoundedCornerShape(25.dp))
+        ) {
+            Button(
+                onClick = addOnClick,
+                content = {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(R.string.add_training_title),
+                        tint = MaterialTheme.colorScheme.tertiary
+                    )
+
+                    Text(
+                        text = stringResource(R.string.training),
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontWeight = FontWeight.W600,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                },
+            )
+        }
+
     }
 }

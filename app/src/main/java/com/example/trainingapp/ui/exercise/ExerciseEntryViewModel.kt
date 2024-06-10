@@ -76,7 +76,6 @@ fun ExerciseDetails.toExercise(trainingId: Int): Exercise {
 fun ExerciseDetails.toExerciseHistory(trainingHistoryId: Int): ExerciseHistory {
     if (weight.isBlank()) {
         return ExerciseHistory(
-            id = id,
             name = name,
             sets = sets.toInt(),
             reps = reps.toInt(),
@@ -85,7 +84,6 @@ fun ExerciseDetails.toExerciseHistory(trainingHistoryId: Int): ExerciseHistory {
         )
     } else {
         return ExerciseHistory(
-            id = id,
             name = name,
             sets = sets.toInt(),
             reps = reps.toInt(),

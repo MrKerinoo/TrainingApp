@@ -4,9 +4,14 @@ import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.data.entities.ExerciseHistory
 import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.entities.TrainingHistory
+import com.example.trainingapp.data.entities.User
 import kotlinx.coroutines.flow.Flow
 
 interface TrainingsRepository {
+
+    //
+    suspend fun deleteDatabase()
+    suspend fun deleteHistoryDatabase()
 
     // Training related methods
     fun getAllTrainingsStream() : Flow<List<Training>>
@@ -36,4 +41,10 @@ interface TrainingsRepository {
     fun getExerciseHistoriesForTrainingStream(trainingId: Int) : Flow<List<ExerciseHistory>>
     suspend fun insertExerciseHistory(exerciseHistory: ExerciseHistory)
     suspend fun deleteExerciseHistory(exerciseHistory: ExerciseHistory)
+
+    // Profile related methods
+    fun getUserStream() : Flow<User?>
+    suspend fun insertUser(user: User)
+    suspend fun updateUser(user: User)
+    suspend fun deleteUser(user: User)
 }

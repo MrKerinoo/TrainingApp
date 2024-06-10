@@ -15,6 +15,10 @@ import com.example.trainingapp.ui.exercise.ExerciseEditDestination
 import com.example.trainingapp.ui.exercise.ExerciseEditScreen
 import com.example.trainingapp.ui.exercise.ExerciseEntryScreen
 import com.example.trainingapp.ui.exercise.ExerciseEntryScreenDestination
+import com.example.trainingapp.ui.profile.SettingsDestination
+import com.example.trainingapp.ui.profile.SettingsScreen
+import com.example.trainingapp.ui.profile.UserDestination
+import com.example.trainingapp.ui.profile.UserScreen
 import com.example.trainingapp.ui.training.TrainingEditDestination
 import com.example.trainingapp.ui.training.TrainingEditScreen
 import com.example.trainingapp.ui.training.TrainingEntryScreen
@@ -35,8 +39,7 @@ fun TrainingNavigation(
         composable(route = HomeDestination.route) {
             HomeScreen(
                 navigateToHistory = { navController.navigate(HistoryDestination.route) },
-                navigateToHome = { /*DO NOTHING*/ },
-                navigateToProfile = { /*TODO*/ },
+                navigateToProfile = { navController.navigate(UserDestination.route) },
                 navigateToTrainingEntry = { navController.navigate(TrainingEntryScreenDestination.route) },
                 navigateToTrainingEdit = {
                     navController.navigate("${TrainingEditDestination.route}/$it")},
@@ -48,9 +51,20 @@ fun TrainingNavigation(
         composable(route = HistoryDestination.route) {
             HistoryScreen(
                 navigateToHome = { navController.navigate(HomeDestination.route) },
-                navigateToProfile = { /*TODO*/ },
-                navigateToHistory = { /*DO NOTHING*/ }
+                navigateToProfile = { navController.navigate(UserDestination.route) },
             )
+        }
+
+        composable(route = UserDestination.route) {
+            UserScreen(
+                navigateToHome = { navController.navigate(HomeDestination.route) },
+                navigateToHistory = { navController.navigate(HistoryDestination.route) },
+                navigateToSettings = { navController.navigate(SettingsDestination.route)}
+            )
+        }
+        
+        composable(route = SettingsDestination.route) {
+            SettingsScreen(navigateBack = { navController.popBackStack() })
         }
 
         composable(route = TrainingEntryScreenDestination.route) {
@@ -69,7 +83,7 @@ fun TrainingNavigation(
             val trainingId = backStackEntry.arguments?.getInt(ExerciseEntryScreenDestination.trainingIdArg)
             ExerciseEntryScreen(
                 navigateBack = { navController.popBackStack() },
-                trainingId = trainingId // Pass the trainingId to the ExerciseEntryScreen
+                trainingId = trainingId
             )
         }
 

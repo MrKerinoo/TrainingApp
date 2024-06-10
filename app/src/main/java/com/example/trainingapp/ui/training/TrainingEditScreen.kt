@@ -1,6 +1,5 @@
 package com.example.trainingapp.ui.training
 
-import android.os.CountDownTimer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -25,15 +23,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -46,10 +41,7 @@ import com.example.trainingapp.TrainingAppTopAppBar
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.delay
 
 object TrainingEditDestination : NavigationDestination {
     override val route: String = "training_edit"
@@ -100,26 +92,36 @@ fun TrainingEditScreen(
             ) {
                 Text(
                     text = stringResource(R.string.save_action),
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
         },
         modifier = modifier
     ) { innerPadding ->
-        TrainingEditBody(
-            exercisesList = exerercisesUiState.exerciseList,
-            trainingId = trainingId!!,
-            navigateToExerciseEntry =  { navigateToExerciseEntry(it) },
-            onExerciseClick = navigateToExerciseEdit,
-            onDeleteTraining = {
-                coroutineScope.launch {
-                    viewModel.deleteTraining()
-                    navigateBack()
-                } },
-            onTrainingValueChange = viewModel::updateUiState,
-            trainingUiState = trainingUiState,
-            modifier = Modifier.padding(innerPadding)
-        )
+        Box (
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+
+            TrainingEditBody(
+                exercisesList = exerercisesUiState.exerciseList,
+                trainingId = trainingId!!,
+                navigateToExerciseEntry = { navigateToExerciseEntry(it) },
+                onExerciseClick = navigateToExerciseEdit,
+                onDeleteTraining = {
+                    coroutineScope.launch {
+                        viewModel.deleteTraining()
+                        navigateBack()
+                    }
+                },
+                onTrainingValueChange = viewModel::updateUiState,
+                trainingUiState = trainingUiState,
+                modifier = Modifier
+            )
+        }
 
     }
 }
@@ -140,13 +142,6 @@ fun TrainingEditBody(
         modifier = modifier,
         contentPadding = PaddingValues (0.dp)
     ){
-
-        //Timer
-        item {
-            //TimerScreen()
-        }
-
-
         //Training entry
         item {
             TrainingEntryBody(
@@ -183,6 +178,7 @@ fun TrainingEditBody(
             {
                 Text(
                     text = stringResource(R.string.add_exercise_action),
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.tertiary
                 )
             }
@@ -205,6 +201,7 @@ fun TrainingEditBody(
             {
                 Text(
                     text = stringResource(R.string.delete_training_action),
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.error
                 )
             }
