@@ -1,11 +1,11 @@
 package com.example.trainingapp.data
 
 import androidx.room.TypeConverter
-import com.example.trainingapp.data.entities.Exercise
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.util.Date
 
+/**
+ * Converters is a class that contains the methods to convert the data types used in the database.
+ */
 class Converters {
     @TypeConverter
     fun fromTimetamp(value: Long?): Date? {

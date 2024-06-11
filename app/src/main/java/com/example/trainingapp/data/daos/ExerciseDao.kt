@@ -7,6 +7,10 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.trainingapp.data.entities.Exercise
 import kotlinx.coroutines.flow.Flow
+
+/**
+ * ExerciseDao is a Data Access Object interface that contains methods to interact with the exercises table in the database.
+ */
 @Dao
 interface ExerciseDao {
 

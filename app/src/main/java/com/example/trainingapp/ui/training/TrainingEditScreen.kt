@@ -44,6 +44,10 @@ import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
+/**
+ * TrainingEditDestination is a NavigationDestination that represents the
+ * destination for editing a training.
+ */
 object TrainingEditDestination : NavigationDestination {
     override val route: String = "training_edit"
     override val titleRes: Int = R.string.training_edit
@@ -51,6 +55,10 @@ object TrainingEditDestination : NavigationDestination {
     val routeWithArgs = "${route}/{${trainingIdArg}}"
 }
 
+/**
+ * TrainingEditScreen is a composable function that displays the UI for
+ * editing and deleting a training.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainingEditScreen(
@@ -127,6 +135,11 @@ fun TrainingEditScreen(
     }
 }
 
+/**
+ * TrainingEditBody is a composable function that displays the body of the
+ * TrainingEditScreen. It displays the training details and the list of exercises.
+ * Provides buttons to add an exercise and delete the training.
+ */
 @Composable
 fun TrainingEditBody(
     exercisesList: List<Exercise>,
@@ -193,7 +206,7 @@ fun TrainingEditBody(
             Button(
                 onClick = { showDialog.value = true },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.onError,
+                    containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -203,7 +216,7 @@ fun TrainingEditBody(
                 Text(
                     text = stringResource(R.string.delete_training_action),
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.secondaryContainer
                 )
             }
 
@@ -218,7 +231,10 @@ fun TrainingEditBody(
 }
 
 
-
+/**
+ * TrainingEntryBody is a composable function that displays the body of the
+ * TrainingEntryScreen. Displays the training details.
+ */
 @Composable
 private fun InfoBody(
 ) {
@@ -248,6 +264,10 @@ private fun InfoBody(
     }
 }
 
+/**
+ * ExerciseItem is a composable function that displays an exercise item.
+ * Displays the exercise name, sets, reps, and weight.
+ */
 @Composable
 private fun ExerciseItem (
     exercise: Exercise,
@@ -303,6 +323,10 @@ private fun ExerciseItem (
 
 }
 
+/**
+ * DialogBody is a composable function that displays a dialog with a question
+ * and two buttons for the user to confirm or cancel the action.
+ */
 @Composable
 fun DialogBody(
     onClickYes : () -> Unit,

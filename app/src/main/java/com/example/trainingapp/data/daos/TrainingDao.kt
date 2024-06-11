@@ -9,6 +9,9 @@ import androidx.room.Update
 import com.example.trainingapp.data.entities.Training
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * TrainingDao is a Data Access Object interface that contains methods to interact with the trainings table in the database.
+ */
 @Dao
 interface TrainingDao {
 

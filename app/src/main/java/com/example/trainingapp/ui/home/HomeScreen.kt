@@ -63,11 +63,20 @@ import com.example.trainingapp.ui.training.DialogBody
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/**
+ * HomeDestination is an object that implements the NavigationDestination interface.
+ * It has a route and a titleRes property.
+ */
 object HomeDestination : NavigationDestination {
     override val route: String = "home"
     override val titleRes: Int = R.string.home
 }
 
+/**
+ * HomeScreen is a composable function that displays the home screen of the app.
+ * It displays a list of trainings and provides options to add, edit, and delete trainings.
+ * You are able to navigate to the history and profile screens from this screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
@@ -120,6 +129,9 @@ fun HomeScreen(
     }
 }
 
+/** HomeBody is a composable function that displays the body of the HomeScreen.
+ * It displays a list of trainings and title with add button.
+ */
 @Composable
 private fun HomeBody(
     onDeleteClick: (Training) -> Unit,
@@ -167,6 +179,9 @@ private fun HomeBody(
     }
 }
 
+/** TrainingList is a composable function that displays a list of trainings.
+ * It displays a list of trainings and provides options to add, start, edit, and delete trainings.
+ */
 @Composable
 private fun TrainingList(
     trainingList: List<Training>,
@@ -202,6 +217,8 @@ private fun TrainingList(
 
 }
 
+/** TrainingItem is a composable function that displays a single training item.
+ */
 @Composable
 private fun TrainingItem(
     training: Training,
@@ -304,6 +321,11 @@ private fun TrainingItem(
         }
     }
 }
+
+/** TrainingMenu is a composable function
+ * that displays a dropdown menu for a training item
+ * with options to edit and delete the training.
+ */
 @Composable
 private fun TrainingMenu(
     expanded: MutableState<Boolean>,
@@ -375,6 +397,9 @@ private fun TrainingMenu(
 
 }
 
+/** Training is a composable function that displays the title of the training list.
+ *  and provides an option to add a new training.
+ */
 @Composable
 private fun Training(
     modifier: Modifier = Modifier,

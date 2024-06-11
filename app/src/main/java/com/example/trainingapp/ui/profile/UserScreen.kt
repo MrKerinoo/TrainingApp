@@ -30,11 +30,20 @@ import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
+/**
+ * UserDestination is a NavigationDestination object that represents the destination
+ * for the User screen.
+ */
 object UserDestination : NavigationDestination {
     override val route: String = "profile"
     override val titleRes: Int = R.string.profile
 }
 
+/**
+ * UserScreen is a composable function that displays the UI for
+ * the User screen.
+ * It uses UserViewModel to provide the data for the screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserScreen(
@@ -94,6 +103,11 @@ fun UserScreen(
     }
 }
 
+/**
+ * ProfileBody is a composable function that displays the body of the User screen.
+ * It uses UserViewModel to provide the data for the screen.
+ * Contains the form for the user details.
+ */
 @Composable
 fun ProfileBody (
     userUiState: UserUiState,
@@ -133,6 +147,10 @@ fun ProfileBody (
     }
 }
 
+/**
+ * UserInputForm is a composable function that displays the form for the user details.
+ * Validates the input data before saving the user entry.
+ */
 @Composable
 private fun UserInputForm(
     userUiState: UserUiState,

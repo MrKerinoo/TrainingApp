@@ -2,6 +2,9 @@ package com.example.trainingapp.data
 
 import android.content.Context
 
+/**
+ * AppContainer is an interface that defines the dependencies that the app uses.
+ */
 interface AppContainer{
     val trainingsRepository: TrainingsRepository
 }

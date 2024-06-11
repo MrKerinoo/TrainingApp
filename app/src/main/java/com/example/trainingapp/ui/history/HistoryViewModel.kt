@@ -1,6 +1,5 @@
 package com.example.trainingapp.ui.history
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.TrainingsRepository
@@ -11,8 +10,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
+/**
+ * HistoryViewModel is the ViewModel that provides data for the History screen.
+ * It uses TrainingsRepository to get the list of all training histories.
+ */
 class HistoryViewModel(
-    savedStateHandle: SavedStateHandle,
     private val trainingsRepository: TrainingsRepository,
     ) : ViewModel() {
 
@@ -20,7 +22,7 @@ class HistoryViewModel(
         trainingsRepository.getAllTrainingHistoriesStream().map { HistoryUiState(it) }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = HistoryUiState()
             )
 
@@ -28,7 +30,7 @@ class HistoryViewModel(
         trainingsRepository.getAllExerciseHistoriesStream().map { ExerciseHistoryUiState(it) }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = ExerciseHistoryUiState()
             )
 

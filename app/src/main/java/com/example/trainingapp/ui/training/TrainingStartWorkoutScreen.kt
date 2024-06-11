@@ -39,6 +39,11 @@ object TrainingStartWorkoutDestination : NavigationDestination {
     val routeWithArgs = "${route}/{${trainingIdArg}}"
 }
 
+/**
+ * TrainingStartWorkoutScreen is a composable function that displays the UI for
+ * starting a workout.
+ * It uses TrainingEditViewModel to provide the data for the screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainingStartWorkoutScreen (
@@ -77,7 +82,7 @@ fun TrainingStartWorkoutScreen (
                         navigateBack()
                     } },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onError
+                        containerColor = MaterialTheme.colorScheme.onSecondaryContainer
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -85,7 +90,7 @@ fun TrainingStartWorkoutScreen (
                 ) {
                     Text(
                         text = stringResource(R.string.cancel_workout_action),
-                        color = MaterialTheme.colorScheme.error
+                        color = MaterialTheme.colorScheme.secondaryContainer
                     )
                 }
             }
@@ -135,6 +140,11 @@ fun TrainingStartWorkoutScreen (
     }
 }
 
+/**
+ * TrainingStartWorkoutBody is a composable function that displays the body of the TrainingStartWorkout screen.
+ * It contains the TrainingEditBody for editing training while working out,
+ * TimerScreen and finish button.
+ */
 @Composable
 fun TrainingStartWorkoutBody(
     exercisesList: List<Exercise>,
@@ -196,7 +206,9 @@ fun TrainingStartWorkoutBody(
 
 }
 
-
+/**
+ * TimerScreen is a composable function that displays the timer.
+ */
 @Composable
 fun TimerScreen(
     timePassed: Int

@@ -27,6 +27,10 @@ import com.example.trainingapp.ui.navigation.NavigationDestination
 import com.example.trainingapp.ui.training.DialogBody
 import kotlinx.coroutines.launch
 
+/**
+ * ExerciseEditDestination is a NavigationDestination object that represents the destination
+ * for the ExerciseEdit screen.
+ */
 object ExerciseEditDestination : NavigationDestination {
     override val route: String = "exercise_edit"
     override val titleRes: Int = R.string.exercise_edit
@@ -35,6 +39,11 @@ object ExerciseEditDestination : NavigationDestination {
     val routeWithArgs = "$route/{$trainingIdArg}/{$exerciseIdArg}"
 }
 
+/**
+ * ExerciseEditScreen is a composable function that displays the UI for
+ * editing an existing exercise.
+ * It uses ExerciseEditViewModel to provide the data for the screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExerciseEditScreen(
@@ -98,6 +107,10 @@ fun ExerciseEditScreen(
     }
 }
 
+/**
+ * ExerciseEditBody is a composable function that displays the body of the ExerciseEdit screen.
+ * It contains the ExerciseEntryBody and a delete button.
+ */
 @Composable
 fun ExerciseEditBody(
     onDeleteTraining : () -> Unit,
@@ -118,7 +131,7 @@ fun ExerciseEditBody(
         Button(
             onClick = { showDialog.value = true },
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onError,
+                containerColor = MaterialTheme.colorScheme.onSecondaryContainer,
             ),
             modifier = Modifier
                 .fillMaxWidth()
@@ -127,7 +140,7 @@ fun ExerciseEditBody(
         {
             Text(
                 text = stringResource(R.string.delete_exercise_action),
-                color = MaterialTheme.colorScheme.error,
+                color = MaterialTheme.colorScheme.secondaryContainer,
                 style = MaterialTheme.typography.titleMedium,
             )
         }

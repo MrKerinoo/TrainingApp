@@ -3,6 +3,9 @@ package com.example.trainingapp.data.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * User is a data class that represents the user entity in the database.
+ */
 @Entity(tableName = "user")
 data class User (
     @PrimaryKey(autoGenerate = true)

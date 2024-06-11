@@ -9,6 +9,9 @@ import androidx.room.Update
 import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * TrainingHistoryDao is a Data Access Object interface that contains methods to interact with the training history table in the database.
+ */
 @Dao
 interface TrainingHistoryDao {
 

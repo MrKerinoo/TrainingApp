@@ -12,6 +12,13 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+/**
+ * UserViewModel is the ViewModel that provides data for the User screen.
+ * It uses TrainingsRepository to get the user details.
+ * Validates the input data before saving the user details.
+ * Updates UiState and saves the user details.
+ * Transforms UserDetails to User.
+ */
 class UserViewModel(
     private val trainingsRepository: TrainingsRepository
 ) : ViewModel() {

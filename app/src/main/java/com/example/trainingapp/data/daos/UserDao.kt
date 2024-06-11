@@ -8,6 +8,9 @@ import androidx.room.Update
 import com.example.trainingapp.data.entities.User
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * UserDao is a Data Access Object interface that contains methods to interact with the user table in the database.
+ */
 @Dao
 interface UserDao {
 

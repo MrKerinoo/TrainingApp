@@ -12,6 +12,13 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+/**
+ * ExerciseEditViewModel is the ViewModel that provides data for the ExerciseEdit screen.
+ * It uses TrainingsRepository to get the exercise details.
+ * Validates the input data before updating the exercise entry.
+ * Updates UiState and updates the exercise entry.
+ * Transforms ExerciseDetails to Exercise.
+ */
 class ExerciseEditViewModel(
     savedStateHandle: SavedStateHandle,
     private val trainingsRepository: TrainingsRepository,

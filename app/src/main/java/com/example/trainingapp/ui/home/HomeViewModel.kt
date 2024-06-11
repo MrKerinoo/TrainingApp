@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * HomeViewModel is the ViewModel that provides data for the Home screen.
+ * It uses TrainingsRepository to get the list of all trainings.
+ */
 class HomeViewModel(private val trainingsRepository: TrainingsRepository) : ViewModel() {
 
     val homeUiState: StateFlow<HomeUiState> =

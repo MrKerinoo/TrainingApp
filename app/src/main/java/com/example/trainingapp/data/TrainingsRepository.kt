@@ -7,6 +7,9 @@ import com.example.trainingapp.data.entities.TrainingHistory
 import com.example.trainingapp.data.entities.User
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * TrainingsRepository is the interface that defines the methods to interact with the database.
+ */
 interface TrainingsRepository {
 
     //

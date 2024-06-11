@@ -7,6 +7,9 @@ import androidx.room.TypeConverters
 import com.example.trainingapp.data.Converters
 import java.util.Date
 
+/**
+ * ExerciseHistory is a data class that represents the exercise history entity in the database.
+ */
 @Entity(
     tableName = "exercises_history",
     foreignKeys = [

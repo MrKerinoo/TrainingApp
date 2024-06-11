@@ -21,6 +21,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Date
 
+/**
+ * TrainingEditViewModel is the ViewModel that provides data for the TrainingEdit screen.
+ * It uses TrainingsRepository to get the list of all exercises for a training.
+ * Validates the input data before updating the training entry.
+ * Updates UiState and updates the training entry.
+ * Transforms TrainingDetails to Training and TrainingHistory.
+ */
 class TrainingEditViewModel(
     savedStateHandle: SavedStateHandle,
     private val trainingsRepository: TrainingsRepository

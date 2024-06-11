@@ -8,6 +8,9 @@ import androidx.room.Query
 import com.example.trainingapp.data.entities.ExerciseHistory
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * ExerciseHistoryDao is a Data Access Object interface that contains methods to interact with the exercises history table in the database.
+ */
 @Dao
 interface ExerciseHistoryDao {
     @Query("SELECT * FROM exercises_history ORDER BY name ASC")

@@ -33,6 +33,10 @@ object TrainingEntryScreenDestination : NavigationDestination {
     override val titleRes: Int = R.string.training_entry
 }
 
+/**
+ * TrainingEntryScreen is a composable function that displays the UI for
+ * creating a new training entry.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainingEntryScreen(
@@ -93,6 +97,10 @@ fun TrainingEntryScreen(
     }
 }
 
+/**
+ * TrainingEntryBody is a composable function that displays the body of the
+ * training entry screen. It contains the input form for creating a new training entry.
+ */
 @Composable
 fun TrainingEntryBody(
     trainingUiState: TrainingUiState,
@@ -112,6 +120,10 @@ fun TrainingEntryBody(
     }
 }
 
+/**
+ * TrainingInputForm is a composable function that displays the input form
+ * for creating a new training entry.
+ */
 @Composable
 fun TrainingInputForm(
     trainingUiState: TrainingUiState,

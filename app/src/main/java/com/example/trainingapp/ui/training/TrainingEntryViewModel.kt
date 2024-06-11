@@ -13,6 +13,13 @@ import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.launch
 import java.util.Date
 
+/**
+ * TrainingEntryViewModel is the ViewModel that provides data for the TrainingEntry screen.
+ * It uses TrainingsRepository to save the training entry.
+ * Validates the input data before saving the training entry.
+ * Updates UiState and saves the training entry.
+ * Transforms TrainingDetails to Training and TrainingHistory.
+ */
 class TrainingEntryViewModel (
     private val trainingsRepository: TrainingsRepository
 ) : ViewModel()

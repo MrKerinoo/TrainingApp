@@ -30,11 +30,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainingapp.ui.navigation.TrainingNavigation
 
+/**
+ * TrainingApp is the entry point of the application.
+ * It creates TrainingNavigation composable function to
+ * navigate through the app screens.
+ */
 @Composable
 fun TrainingApp(navController: NavHostController = rememberNavController()){
     TrainingNavigation(navController = navController)
 }
 
+/**
+ * TrainingAppTopAppBar is a custom TopAppBar composable function
+ * that displays the app title and back navigation.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrainingAppTopAppBar(
@@ -84,6 +93,11 @@ fun TrainingAppTopAppBar(
         }
     )
 }
+
+/**
+ * TrainingAppBottomAppBar is a custom BottomAppBar composable function
+ * that displays the app navigation to other main screens.
+ */
 @Composable
 fun TrainingAppBottomAppBar(
     navigateToHistory: () -> Unit = {},

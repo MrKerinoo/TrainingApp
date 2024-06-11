@@ -12,6 +12,9 @@ import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.entities.TrainingHistory
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * OfflineTrainingsRepository is the implementation of TrainingsRepository that interacts with the Room database.
+ */
 class OfflineTrainingsRepository(
     private val trainingDao: TrainingDao,
     private val exerciseDao: ExerciseDao,

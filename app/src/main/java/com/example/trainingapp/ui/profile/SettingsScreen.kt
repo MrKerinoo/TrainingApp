@@ -32,11 +32,19 @@ import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
+/* SettingsDestination is a NavigationDestination object that represents the destination
+ * for the Settings screen.
+ */
 object SettingsDestination : NavigationDestination {
     override val route: String = "settings"
     override val titleRes: Int = R.string.settings
 }
 
+/**
+ * SettingsScreen is a composable function that displays the UI for
+ * the Settings screen.
+ * It uses UserViewModel to provide the data for the screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
@@ -73,18 +81,20 @@ fun SettingsScreen(
                     }
                 },
                 viewModel = viewModel,
-                modifier = Modifier,
             )
         }
     }
 }
 
+/**
+ * SettingsBody is a composable function that displays the body of the Settings screen.
+ * It uses UserViewModel to provide the data for the screen.
+ */
 @Composable
 fun SettingsBody(
     userUiState: UserUiState,
     viewModel: UserViewModel,
     updateUser: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val options = listOf(stringResource(R.string.english_lang), stringResource(R.string.slovak_lang), stringResource(R.string.czech_lang))
     var value = 1

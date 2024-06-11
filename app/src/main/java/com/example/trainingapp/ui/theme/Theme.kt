@@ -21,6 +21,9 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = DarkGrey,
     onTertiary = DarkOrange80,
 
+    secondaryContainer = Red80,
+    onSecondaryContainer = DarkRed,
+
     error = Red80,
     onError = DarkRed,
 
@@ -37,11 +40,14 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Grey80,
     onTertiary = Color(0xFF424242),
 
-    error = Black80, // Red for cancel/delete button
-    onError = Red80, // White for text on error button
+    secondaryContainer = Black80,
+    onSecondaryContainer = Red80,
 
-    primaryContainer = Green80, // Light Green for finish button
-    onPrimaryContainer = Color(0xFF424242), // Dark Gray for text on finish button
+    error = Red80,
+    onError = DarkRed,
+
+    primaryContainer = Green80,
+    onPrimaryContainer = Color(0xFF424242),
 )
 
 @Composable

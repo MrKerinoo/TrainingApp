@@ -16,7 +16,12 @@ import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.entities.TrainingHistory
 import com.example.trainingapp.data.entities.User
 
-@Database(entities = [Training::class, Exercise::class, TrainingHistory::class, ExerciseHistory::class, User::class], version = 28, exportSchema = false)
+/**
+ * TrainingDatabase is the Room database that contains the tables for the app.
+ */
+@Database(entities = [Training::class, Exercise::class,
+    TrainingHistory::class, ExerciseHistory::class, User::class],
+    version = 28, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class TrainingDatabase : RoomDatabase() {
     abstract fun trainingDao(): TrainingDao

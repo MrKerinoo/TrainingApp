@@ -31,6 +31,10 @@ import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
+/**
+ * ExerciseEntryScreenDestination is a NavigationDestination object that represents the destination
+ * for the ExerciseEntryScreen composable.
+ */
 object ExerciseEntryScreenDestination : NavigationDestination {
     override val route: String = "exercise_entry"
     override val titleRes: Int = R.string.exercise_entry
@@ -39,6 +43,10 @@ object ExerciseEntryScreenDestination : NavigationDestination {
     val routeWithArgs = "$route/{$trainingIdArg}"
 }
 
+/**
+ * ExerciseEntryScreen is a composable function that displays the UI for
+ * creating a new exercise entry.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExerciseEntryScreen(
@@ -99,6 +107,10 @@ fun ExerciseEntryScreen(
     }
 }
 
+/**
+ * ExerciseEntryBody is a composable function that displays the body of the ExerciseEntryScreen.
+ * It contains the form for entering exercise details.
+ */
 @Composable
 fun ExerciseEntryBody(
     exerciseUiState: ExerciseUiState,
@@ -117,6 +129,10 @@ fun ExerciseEntryBody(
 
 }
 
+/**
+ * ExerciseEntryForm is a composable function that displays the form for entering exercise details.
+ * It contains the input fields for the exercise name, sets, reps, and weight.
+ */
 @Composable
 fun ExerciseEntryForm(
     exerciseUiState: ExerciseUiState,

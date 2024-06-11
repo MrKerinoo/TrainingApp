@@ -8,6 +8,9 @@ import androidx.room.TypeConverters
 import com.example.trainingapp.data.Converters
 import java.util.Date
 
+/**
+ * Exercise is a data class that represents the exercise entity in the database.
+ */
 @Entity(
     tableName = "exercises",
     foreignKeys = [

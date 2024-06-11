@@ -10,6 +10,11 @@ import androidx.compose.ui.Modifier
 import com.example.trainingapp.ui.theme.TrainingAppTheme
 import java.util.Locale
 
+/**
+ * MainActivity is the entry point of the application.
+ * It creates TrainingAppTheme and TrainingApp composable functions
+ * to display the app and set the app's theme.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()

@@ -1,5 +1,7 @@
 package com.example.trainingapp.ui.navigation
 
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -26,6 +28,10 @@ import com.example.trainingapp.ui.training.TrainingEntryScreenDestination
 import com.example.trainingapp.ui.training.TrainingStartWorkoutDestination
 import com.example.trainingapp.ui.training.TrainingStartWorkoutScreen
 
+/**
+ * TrainingNavigation is a composable function that defines the navigation
+ * routes for the TrainingApp.
+ */
 @Composable
 fun TrainingNavigation(
     navController : NavHostController,
@@ -95,7 +101,11 @@ fun TrainingNavigation(
         ) { backStackEntry ->
             val trainingId = backStackEntry.arguments?.getInt(TrainingEditDestination.trainingIdArg)
             TrainingEditScreen(
-                navigateBack = { navController.popBackStack() },
+                navigateBack = {
+                    Handler(Looper.getMainLooper()).post {
+                        navController.popBackStack()
+                    }
+                },
                 navigateToExerciseEntry = {
                     navController.navigate("${ExerciseEntryScreenDestination.route}/$trainingId")
                 },

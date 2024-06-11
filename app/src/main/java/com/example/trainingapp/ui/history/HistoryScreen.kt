@@ -43,11 +43,17 @@ import com.example.trainingapp.ui.navigation.NavigationDestination
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/**
+ * HistoryDestination is a NavigationDestination object that represents the history screen.
+ */
 object HistoryDestination : NavigationDestination {
     override val route: String = "history"
     override val titleRes: Int = R.string.history
 }
 
+/**
+ * HistoryScreen is a composable function that displays the history screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreen(
@@ -93,6 +99,10 @@ fun HistoryScreen(
     }
 }
 
+/**
+ * HistoryBody is a composable function that displays the body of the history screen.
+ * It contains the list of training history.
+ */
 @Composable
 private fun HistoryBody(
     trainingList: List<TrainingHistory>,
@@ -125,6 +135,10 @@ private fun HistoryBody(
     }
 }
 
+/**
+ * HistoryList is a composable function that displays the list of training history.
+ * It contains the list of training history items.
+ */
 @Composable
 private fun HistoryList(
     trainingList: List<TrainingHistory>,
@@ -148,6 +162,11 @@ private fun HistoryList(
     }
 }
 
+/**
+ * HistoryItem is a composable function that displays a single training history item
+ * with a list of information about exercises, name of training, date and duration
+ * of training.
+ */
 @Composable
 private fun HistoryItem(
     training: TrainingHistory,
@@ -243,6 +262,11 @@ private fun HistoryItem(
         }
     }
 }
+
+/**
+ * ExerciseItem is a composable function that displays a single exercise item
+ * with information about exercise name, number of sets, reps and weight.
+ */
 @Composable
 private fun ExerciseItem(
     exercise: ExerciseHistory
@@ -312,7 +336,10 @@ private fun ExerciseItem(
 }
 
 
-
+/**
+ * InfoBody is a composable function that displays the information about exercises
+ * with the name of exercise, number of sets, reps and weight.
+ */
 @Composable
 private fun InfoBody() {
     Row {

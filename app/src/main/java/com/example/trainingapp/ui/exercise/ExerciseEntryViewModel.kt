@@ -9,6 +9,13 @@ import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.data.entities.ExerciseHistory
 
+/**
+ * ExerciseEntryViewModel is the ViewModel that provides data for the ExerciseEntry screen.
+ * It uses TrainingsRepository to save the exercise entry.
+ * Validates the input data before saving the exercise entry.
+ * Updates UiState and saves the exercise entry.
+ * Transforms ExerciseDetails to Exercise and ExerciseHistory.
+ */
 class ExerciseEntryViewModel (
     private val trainingsRepository: TrainingsRepository,
 ) : ViewModel()

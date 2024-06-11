@@ -6,6 +6,9 @@ import androidx.room.TypeConverters
 import com.example.trainingapp.data.Converters
 import java.util.Date
 
+/**
+ * TrainingHistory is a data class that represents the training history entity in the database.
+ */
 @Entity(tableName = "training_history")
 data class TrainingHistory (
     @PrimaryKey(autoGenerate = true)
