@@ -71,10 +71,12 @@ fun TrainingEntryScreen(
             ) {
                 Text(
                     text = stringResource(R.string.save_action),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
         },
+        modifier = modifier
     ) { innerPadding ->
         Box (
             modifier = Modifier
@@ -120,6 +122,7 @@ fun TrainingInputForm(
     OutlinedTextField(
         value = trainingUiState.trainingDetails.name,
         onValueChange = { newValue -> onTrainingValueChange(trainingUiState.trainingDetails.copy(name = newValue))},
+        isError = !trainingUiState.isEntryValid,
         label = { Text(stringResource(R.string.training_name_req)) },
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.primary,

@@ -10,6 +10,8 @@ import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.ui.exercise.toExerciseDetails
 import com.example.trainingapp.ui.exercise.toExerciseHistory
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class TrainingEditViewModel(
     savedStateHandle: SavedStateHandle,
@@ -24,6 +27,16 @@ class TrainingEditViewModel(
 ) : ViewModel()
 {
     private val trainingId: Int = checkNotNull(savedStateHandle[TrainingEditDestination.trainingIdArg])
+    val timer = MutableStateFlow(0)
+
+    init {
+        viewModelScope.launch {
+            while (true) {
+                delay(1000L)
+                timer.value++
+            }
+        }
+    }
 
     val exercisesUiState: StateFlow<ExercisesUiState> =
         trainingsRepository.getExercisesForTrainingStream(trainingId).map {ExercisesUiState(it)}
@@ -57,10 +70,17 @@ class TrainingEditViewModel(
         }
     }
 
+    fun finishTraining()
+    {
+        viewModelScope.launch {
+            trainigUiState.trainingDetails.date = Date()
+        }
+    }
+
     //History database
     suspend fun insertTrainingHistory() {
         if (validateInput(trainigUiState.trainingDetails)) {
-            val trainingHistoryId = trainingsRepository.insertTrainingHistory(trainigUiState.trainingDetails.toTrainingHistory())
+            val trainingHistoryId = trainingsRepository.insertTrainingHistory(trainigUiState.trainingDetails.toTrainingHistory(timer.value))
 
             exercisesUiState.value.exerciseList.forEach() { exercise ->
                 trainingsRepository.insertExerciseHistory(exercise.toExerciseDetails().toExerciseHistory(trainingHistoryId.toInt()))

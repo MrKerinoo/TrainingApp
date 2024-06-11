@@ -2,10 +2,10 @@ package com.example.trainingapp.ui.history
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,7 +26,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -100,7 +102,6 @@ private fun HistoryBody(
     Column(
         modifier = modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -156,6 +157,16 @@ private fun HistoryItem(
     val dateFormat = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
     val dateString = dateFormat.format(training.date)
 
+    val hours = training.time / 3600
+    val minutes = (training.time % 3600) / 60
+    val seconds = (training.time % 3600) % 60
+
+    val timeString = when {
+        hours > 0 -> String.format("%dh%02dmin%02ds", hours, minutes, seconds)
+        minutes > 0 -> String.format("%02dmin%02ds", minutes, seconds)
+        else -> String.format("%02ds", seconds)
+    }
+
     Column (
         modifier = modifier
             .border(1.dp, MaterialTheme.colorScheme.secondary)
@@ -166,21 +177,20 @@ private fun HistoryItem(
 
     ) {
 
-        Row (
+        Text(
+            text = training.name,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier
-                .padding(bottom = dimensionResource(R.dimen.padding_small))
-        ) {
-            Text(
-                text = training.name,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier
-                    .padding(
-                        bottom = dimensionResource(R.dimen.padding_small),
-                        end = 60.dp
-                    )
-            )
+                .padding(
+                    bottom = dimensionResource(R.dimen.padding_small),
+                    end = 25.dp
+                )
+        )
 
+        Row (
+            modifier = Modifier,
+        ) {
             Icon(
                 imageVector = Icons.Default.DateRange,
                 contentDescription = "hah",
@@ -190,18 +200,35 @@ private fun HistoryItem(
                         bottom = dimensionResource(R.dimen.padding_small),
                         end = dimensionResource(R.dimen.padding_small)
                     )
-                )
+            )
 
             Text(
                 text = dateString,
                 color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.W500,
+                modifier = Modifier
+                    .padding(bottom = dimensionResource(R.dimen.padding_small))
+            )
+
+            Spacer(Modifier.width(90.dp))
+
+            Icon(
+                painter = painterResource(R.drawable.timer),
+                contentDescription = "ahaa",
+                modifier = Modifier
+                    .padding(
+                        end = dimensionResource(R.dimen.padding_small)
+                    )
+            )
+
+            Text (
+                text = timeString,
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.W500,
                 modifier = Modifier
                     .padding(bottom = dimensionResource(R.dimen.padding_small))
             )
         }
-
-
-
 
         InfoBody()
 
@@ -223,11 +250,12 @@ private fun ExerciseItem(
     Row {
         Box(
             modifier = Modifier
-                .width(160.dp)
+                .width(170.dp)
         ) {
             Text(
                 text = exercise.name,
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.W500,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -235,11 +263,12 @@ private fun ExerciseItem(
 
         Box(
             modifier = Modifier
-                .width(60.dp)
+                .width(49.dp)
         ) {
             Text(
                 text = exercise.sets.toString(),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.W500,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -247,11 +276,12 @@ private fun ExerciseItem(
 
         Box(
             modifier = Modifier
-                .width(60.dp)
+                .width(55.dp)
         ) {
             Text(
                 text = exercise.reps.toString(),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.W500,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -264,6 +294,7 @@ private fun ExerciseItem(
             Text(
                 text = exercise.weight.toString(),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.W500,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -271,6 +302,7 @@ private fun ExerciseItem(
             Text(
                 text = "kg",
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.W500,
                 textAlign = TextAlign.End,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -278,6 +310,8 @@ private fun ExerciseItem(
         }
     }
 }
+
+
 
 @Composable
 private fun InfoBody() {
@@ -290,6 +324,7 @@ private fun InfoBody() {
             Text(
                 text = stringResource(R.string.exercise),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -297,11 +332,12 @@ private fun InfoBody() {
 
         Box(
             modifier = Modifier
-                .width(60.dp)
+                .width(50.dp)
         ) {
             Text(
                 text = stringResource(R.string.sets),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -309,11 +345,12 @@ private fun InfoBody() {
 
         Box(
             modifier = Modifier
-                .width(60.dp)
+                .width(65.dp)
         ) {
             Text(
                 text = stringResource(R.string.reps),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -326,6 +363,7 @@ private fun InfoBody() {
             Text(
                 text = stringResource(R.string.weight),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier
                     .fillMaxWidth()
             )

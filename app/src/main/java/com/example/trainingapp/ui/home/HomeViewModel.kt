@@ -6,7 +6,6 @@ import com.example.trainingapp.data.entities.Training
 import com.example.trainingapp.data.TrainingsRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -17,17 +16,18 @@ class HomeViewModel(private val trainingsRepository: TrainingsRepository) : View
         trainingsRepository.getAllTrainingsStream().map { HomeUiState(it) }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = HomeUiState()
             )
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
-    }
 
     fun deleteTraining(training: Training) {
         viewModelScope.launch {
             trainingsRepository.deleteTraining(training)
         }
+    }
+
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
     }
 }
 

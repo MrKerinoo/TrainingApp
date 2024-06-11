@@ -38,7 +38,7 @@ class OfflineTrainingsRepository(
     override fun getExercisesForTrainingStream(trainingId: Int): Flow<List<Exercise>> = exerciseDao.getExercisesByTrainingId(trainingId)
     override suspend fun insertExercise(exercise: Exercise) = exerciseDao.insertExercise(exercise)
     override suspend fun updateExercise(exercise: Exercise) = exerciseDao.updateExercise(exercise)
-    override suspend fun deleteExercise(exercise: Exercise) = exerciseDao.deleteExercise(exercise)
+    override suspend fun deleteExercise(id: Int) = exerciseDao.deleteExercise(id)
 
     // TrainingHistory methods
     override fun getAllTrainingHistoriesStream(): Flow<List<TrainingHistory>> = trainingHistoryDao.getAllTrainingHistories()

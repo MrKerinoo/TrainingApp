@@ -1,86 +1,92 @@
 package com.example.trainingapp.ui.profile
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.User
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class UserViewModel(
-    savedStateHandle: SavedStateHandle,
     private val trainingsRepository: TrainingsRepository
 ) : ViewModel() {
 
     var userUiState by mutableStateOf(UserUiState())
         private set
 
-    private val _darkMode = MutableStateFlow(userUiState.userDetails.darkMode)
-    val darkMode = _darkMode.asStateFlow()
 
     init {
         viewModelScope.launch {
             val user = trainingsRepository.getUserStream()
                 .filterNotNull()
                 .first()
-                .toUserUiState()
+                .toUserUiState(true, true ,true)
             userUiState = user
-            _darkMode.value = user.userDetails.darkMode
-
-            Log.d("UserViewModel", "Initial Dark Mode: ${_darkMode.value}")
         }
     }
 
-    fun userExists(): Boolean {
-        return userUiState.userDetails.id != 0
-    }
-
     suspend fun saveUser() {
-        if (validateInput()) {
+        if (validateAge() && validateWeight() && validateHeight()
+            ) {
             trainingsRepository.insertUser(userUiState.userDetails.toUser())
         }
     }
 
     fun updateUiState(userDetails: UserDetails) {
-        userUiState = UserUiState(userDetails = userDetails)
-        _darkMode.value = userDetails.darkMode
-        Log.d("UserViewModel", "Updated Dark Mode: ${_darkMode.value}")
+        userUiState = UserUiState(
+            userDetails = userDetails,
+            isAgeValid = validateAge(userDetails),
+            isWeightValid = validateWeight(userDetails),
+            isHeightValid = validateHeight(userDetails)
+        )
     }
 
     suspend fun updateUser() {
-        if (validateInput()) {
+        if (validateAge()) {
             trainingsRepository.updateUser(userUiState.userDetails.toUser())
-            _darkMode.value = userUiState.userDetails.darkMode
-            Log.d("UserViewModel", "Updated User Dark Mode: ${_darkMode.value}")
         }
     }
 
-    private fun validateInput(uiState: UserDetails = userUiState.userDetails): Boolean {
+    private fun validateAge(uiState: UserDetails = userUiState.userDetails): Boolean {
         return with(uiState) {
-            name.isNotBlank() && age.isNotBlank() && age.toInt() > 0 && weight.isNotBlank() && weight.toFloat() > 0f && height.isNotBlank() && height.toFloat() > 0f
+            age.isDigitsOnly()
         }
     }
+
+    private fun validateWeight(uiState: UserDetails = userUiState.userDetails): Boolean {
+        return with(uiState) {
+            weight.isDigitsOnly()
+        }
+    }
+
+    private fun validateHeight(uiState: UserDetails = userUiState.userDetails): Boolean {
+        return with(uiState) {
+            height.isDigitsOnly()
+        }
+    }
+
+
 }
 
 data class UserUiState(
-    val userDetails: UserDetails = UserDetails()
+    val userDetails: UserDetails = UserDetails(),
+    val isAgeValid: Boolean = true,
+    val isWeightValid: Boolean = true,
+    val isHeightValid: Boolean = true
 )
 
 data class UserDetails(
     val id: Int = 0,
     val name: String = "",
-    val age: String = "",
-    val weight: String = "",
-    val height: String = "",
-    val lang: String = "",
+    val age: String = "0",
+    val weight: String = "0",
+    val height: String = "0",
+    val lang: Int = 1,
     val darkMode: Boolean = true,
 )
 
@@ -104,7 +110,10 @@ fun User.toUserDetails(): UserDetails = UserDetails(
     darkMode = darkMode
 )
 
-fun User.toUserUiState(): UserUiState = UserUiState(
-    userDetails = toUserDetails()
+fun User.toUserUiState(isAgeValid: Boolean = true, isWeightValid: Boolean = true , isHeightValid: Boolean = true): UserUiState = UserUiState(
+    userDetails = this.toUserDetails(),
+    isAgeValid = isAgeValid,
+    isWeightValid = isWeightValid,
+    isHeightValid = isHeightValid
 )
 

@@ -21,7 +21,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
@@ -46,6 +45,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -79,6 +80,7 @@ fun HomeScreen(
     viewModel : HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
+
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold (
@@ -189,6 +191,7 @@ private fun TrainingList(
             items(trainingList) { training ->
                 TrainingItem(
                     training = training,
+
                     onDeleteClick = {onDeleteClick(training)},
                     onEditClick = {onEditClick(training)},
                     onTrainingClick = {onTrainingClick(training.id)},
@@ -207,8 +210,16 @@ private fun TrainingItem(
     onTrainingClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
-    //val dateString = dateFormat.format(training.date)
+
+    val dateString: String
+
+    if (training.date == null)
+    {
+        dateString = ""
+    } else {
+        val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+        dateString = dateFormat.format(training.date)
+    }
 
     Card (
         modifier = modifier
@@ -275,17 +286,20 @@ private fun TrainingItem(
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Default.DateRange,
+                    painter = painterResource(R.drawable.calendar),
                     contentDescription = stringResource(R.string.calendar_title),
                     tint = MaterialTheme.colorScheme.secondary
                 )
 
-                Spacer(Modifier.weight(1f))
+                Spacer(Modifier.width(dimensionResource(R.dimen.padding_small)))
 
-                /*Text (
+                Text(
                     text = dateString,
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 14.sp)
-                )*/
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier
+                )
+
             }
         }
     }

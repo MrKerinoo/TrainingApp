@@ -10,5 +10,7 @@ import java.util.Date
 data class Training (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val name: String
+    val name: String,
+    @TypeConverters(Converters::class)
+    val date: Date?
 )

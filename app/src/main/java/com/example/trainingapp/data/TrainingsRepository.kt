@@ -26,7 +26,7 @@ interface TrainingsRepository {
     fun getExercisesForTrainingStream(trainingId: Int) : Flow<List<Exercise>>
     suspend fun insertExercise(exercise: Exercise)
     suspend fun updateExercise(exercise: Exercise)
-    suspend fun deleteExercise(exercise: Exercise)
+    suspend fun deleteExercise(id: Int)
 
     // TrainingHistory related methods
     fun getAllTrainingHistoriesStream() : Flow<List<TrainingHistory>>

@@ -15,13 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -35,7 +31,6 @@ import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.ui.AppViewModelProvider
 import com.example.trainingapp.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.delay
 
 object TrainingStartWorkoutDestination : NavigationDestination {
     override val route: String = "start_workout"
@@ -58,6 +53,7 @@ fun TrainingStartWorkoutScreen (
     val trainingUiState = viewModel.trainigUiState
     val exerercisesUiState by viewModel.exercisesUiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val timePassed by viewModel.timer.collectAsState()
 
     val trainingId = navBackStackEntry.arguments?.getInt(TrainingEditDestination.trainingIdArg)
 
@@ -80,7 +76,6 @@ fun TrainingStartWorkoutScreen (
                     onClick = { coroutineScope.launch {
                         navigateBack()
                     } },
-                    enabled = trainingUiState.isEntryValid,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.onError
                     ),
@@ -96,6 +91,7 @@ fun TrainingStartWorkoutScreen (
             }
 
         },
+        modifier = modifier
     ) { innerPadding ->
         Box (
             modifier = Modifier
@@ -106,8 +102,14 @@ fun TrainingStartWorkoutScreen (
             TrainingStartWorkoutBody(
                 exercisesList = exerercisesUiState.exerciseList,
                 trainingId = trainingId!!,
+                timePassed = timePassed,
                 navigateToExerciseEntry = { navigateToExerciseEntry(it) },
                 navigateBack = navigateBack,
+                finishTraining = {
+                    coroutineScope.launch {
+                        viewModel.finishTraining()
+                    }
+                },
                 updateTraining = {
                     coroutineScope.launch {
                         viewModel.updateTraining()
@@ -137,7 +139,9 @@ fun TrainingStartWorkoutScreen (
 fun TrainingStartWorkoutBody(
     exercisesList: List<Exercise>,
     trainingId: Int,
+    timePassed: Int,
     updateTraining : () -> Unit,
+    finishTraining : () -> Unit,
     insertTrainingHistory : () -> Unit,
     navigateToExerciseEntry : (Int) -> Unit,
     navigateBack: () -> Unit,
@@ -152,10 +156,13 @@ fun TrainingStartWorkoutBody(
     Column  (
         modifier = modifier
     ){
-        TimerScreen()
+        TimerScreen(
+            timePassed = timePassed
+        )
 
         Button(
             onClick = { coroutineScope.launch {
+                finishTraining()
                 updateTraining()
                 insertTrainingHistory()
                 navigateBack()
@@ -170,7 +177,7 @@ fun TrainingStartWorkoutBody(
         ) {
             Text(
                 text = stringResource(R.string.finish_training_action),
-                color = MaterialTheme.colorScheme.secondary
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
         TrainingEditBody(
@@ -191,22 +198,14 @@ fun TrainingStartWorkoutBody(
 
 
 @Composable
-fun TimerScreen() {
-    var timePassed by remember { mutableStateOf(0) }
-
-    LaunchedEffect(key1 = "timer") {
-        while (true) {
-            delay(1000L)
-            timePassed++
-        }
-    }
-
+fun TimerScreen(
+    timePassed: Int
+) {
     val hours = timePassed / 3600
     val minutes = (timePassed % 3600) / 60
     val seconds = timePassed % 60
 
-    val timeString = when
-    {
+    val timeString = when {
         hours > 0 -> String.format("%d:%02d:%02d", hours, minutes, seconds)
         else -> String.format("%02d:%02d", minutes, seconds)
     }

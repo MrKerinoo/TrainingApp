@@ -11,6 +11,7 @@ data class TrainingHistory (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
+    val time: Int,
     @TypeConverters(Converters::class)
     val date: Date = Date()
 )

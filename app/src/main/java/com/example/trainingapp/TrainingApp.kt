@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -56,14 +55,15 @@ fun TrainingAppTopAppBar(
             fontWeight = FontWeight.Bold
         )
                 },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = contentColorFor(MaterialTheme.colorScheme.primary)),
         modifier = modifier,
         actions = {
                   if (showSettingsIcon) {
                       IconButton(onClick = onSettingsClick) {
                           Icon(
-                              imageVector = Icons.Filled.Settings,
+                              imageVector = Filled.Settings,
                               contentDescription = stringResource(R.string.settings),
                               tint = MaterialTheme.colorScheme.tertiary
                           )

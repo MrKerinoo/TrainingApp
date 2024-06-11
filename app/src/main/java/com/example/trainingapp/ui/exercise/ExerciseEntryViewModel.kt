@@ -3,14 +3,13 @@ package com.example.trainingapp.ui.exercise
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import com.example.trainingapp.data.TrainingsRepository
 import com.example.trainingapp.data.entities.Exercise
 import com.example.trainingapp.data.entities.ExerciseHistory
 
 class ExerciseEntryViewModel (
-    savedStateHandle: SavedStateHandle,
     private val trainingsRepository: TrainingsRepository,
 ) : ViewModel()
 {
@@ -21,25 +20,57 @@ class ExerciseEntryViewModel (
     fun updateUiState(exerciseDetails: ExerciseDetails) {
         exerciseUiState = ExerciseUiState(
             exerciseDetails = exerciseDetails,
-            isEntryValid = validateInput(exerciseDetails))
+            isNameValid = validateName(exerciseDetails),
+            isSetsValid = validateSets(exerciseDetails),
+            isRepsValid = validateReps(exerciseDetails),
+            isWeightValid = validateWeight(exerciseDetails)
+        )
     }
 
     suspend fun saveExercise(trainingId: Int) {
-        if (validateInput()) {
+        if (validateName(exerciseUiState.exerciseDetails) &&
+            validateSets(exerciseUiState.exerciseDetails) &&
+            validateReps(exerciseUiState.exerciseDetails))
+        {
             trainingsRepository.insertExercise(exerciseUiState.exerciseDetails.toExercise(trainingId))
         }
     }
 
-    private fun validateInput(uiState: ExerciseDetails = exerciseUiState.exerciseDetails): Boolean {
-        return with(uiState) {
-            name.isNotBlank() && sets.isNotBlank() && sets.toInt() > 0 && reps.isNotBlank() && reps.toInt() > 0
+    private fun validateName(uiState: ExerciseDetails = exerciseUiState.exerciseDetails): Boolean {
+        val isValid = with(uiState) {
+            name.isNotBlank()
         }
+        return isValid
+    }
+
+    private fun validateSets(uiState: ExerciseDetails = exerciseUiState.exerciseDetails): Boolean {
+        val isValid = with(uiState) {
+            sets.isNotBlank() && sets.isDigitsOnly()
+        }
+        return isValid
+    }
+
+    private fun validateReps(uiState: ExerciseDetails = exerciseUiState.exerciseDetails): Boolean {
+        val isValid = with(uiState) {
+            reps.isNotBlank() && reps.isDigitsOnly()
+        }
+        return isValid
+    }
+
+    private fun validateWeight(uiState: ExerciseDetails = exerciseUiState.exerciseDetails): Boolean {
+        val isValid = with(uiState) {
+            weight.isDigitsOnly()
+        }
+        return isValid
     }
 }
 
 data class ExerciseUiState(
     val exerciseDetails: ExerciseDetails = ExerciseDetails(),
-    val isEntryValid: Boolean = false
+    val isNameValid: Boolean = false,
+    val isSetsValid: Boolean = false,
+    val isRepsValid: Boolean = false,
+    val isWeightValid: Boolean = true
 )
 
 data class ExerciseDetails(
@@ -93,9 +124,16 @@ fun ExerciseDetails.toExerciseHistory(trainingHistoryId: Int): ExerciseHistory {
     }
 }
 
-fun Exercise.toExerciseUiState(isEntryValid: Boolean = false): ExerciseUiState = ExerciseUiState(
+fun Exercise.toExerciseUiState(
+    isNameValid: Boolean = false,
+    isSetsValid: Boolean = false,
+    isRepsValid: Boolean = false,
+    isWeightValid: Boolean = false): ExerciseUiState = ExerciseUiState(
     exerciseDetails = this.toExerciseDetails(),
-    isEntryValid = isEntryValid
+    isNameValid = isNameValid,
+    isSetsValid = isSetsValid,
+    isRepsValid = isRepsValid,
+    isWeightValid = isWeightValid
 )
 
 fun Exercise.toExerciseDetails(): ExerciseDetails = ExerciseDetails(

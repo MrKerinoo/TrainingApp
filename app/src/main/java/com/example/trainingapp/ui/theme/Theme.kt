@@ -7,6 +7,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
@@ -28,21 +29,19 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-
-    primary = White80,
+    primary = Color(0xFFF5F5F5),
     secondary = Black80,
-    tertiary = Orange80,
+    tertiary = Color(0xFF64B5F6),
 
-    onPrimary = Black80,
-    onSecondary = White80,
-    onTertiary = DarkOrange80,
+    onPrimary = Color(0xFF424242),
+    onSecondary = Grey80,
+    onTertiary = Color(0xFF424242),
 
-    error = Red80,
-    onError = DarkRed,
+    error = Black80, // Red for cancel/delete button
+    onError = Red80, // White for text on error button
 
-    primaryContainer = Green80,
-    onPrimaryContainer = DarkGreen,
-
+    primaryContainer = Green80, // Light Green for finish button
+    onPrimaryContainer = Color(0xFF424242), // Dark Gray for text on finish button
 )
 
 @Composable

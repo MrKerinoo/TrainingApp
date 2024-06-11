@@ -15,6 +15,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -86,6 +87,7 @@ fun SettingsBody(
     modifier: Modifier = Modifier,
 ) {
     val options = listOf(stringResource(R.string.english_lang), stringResource(R.string.slovak_lang), stringResource(R.string.czech_lang))
+    var value = 1
 
     Row (
         modifier = Modifier
@@ -101,6 +103,7 @@ fun SettingsBody(
                 text = stringResource(R.string.language),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .padding(
                         start = 10.dp,
@@ -110,10 +113,23 @@ fun SettingsBody(
 
             options.forEach { option ->
                 Row(Modifier.padding(vertical = 8.dp)) {
+
+                    when (option) {
+                        stringResource(R.string.english_lang) -> {
+                            value = 1
+                        }
+                        stringResource(R.string.slovak_lang) -> {
+                            value = 2
+                        }
+                        stringResource(R.string.czech_lang) -> {
+                            value = 3
+                        }
+                    }
+
                     RadioButton(
-                        selected = userUiState.userDetails.lang == option,
+                        selected = userUiState.userDetails.lang == value,
                         onClick = {
-                            val updatedUserDetails = userUiState.userDetails.copy(lang = option)
+                            val updatedUserDetails = userUiState.userDetails.copy(lang = value)
                             viewModel.updateUiState(updatedUserDetails)
                             updateUser()
                         },
@@ -123,6 +139,8 @@ fun SettingsBody(
                     )
                     Text(
                         text = option,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                             .padding(
                                 start = 8.dp,
@@ -133,12 +151,20 @@ fun SettingsBody(
             }
         }
 
-        Spacer(modifier = Modifier.width(130.dp))
+        Spacer(modifier = Modifier.width(100.dp))
 
         Column {
             Text(
                 text = stringResource(R.string.dark_mode),
-                modifier = Modifier.padding(end = 8.dp)
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier
+                    .padding(
+                        start = 10.dp,
+                        bottom = 8.dp,
+                        end = 8.dp
+                    )
             )
             Switch(
                 checked = userUiState.userDetails.darkMode,
@@ -147,6 +173,16 @@ fun SettingsBody(
                     viewModel.updateUiState(updatedUserDetails)
                     updateUser()
                 },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.tertiary,
+                    checkedTrackColor = MaterialTheme.colorScheme.secondary,
+
+                    uncheckedThumbColor = MaterialTheme.colorScheme.tertiary,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier
+                    .padding(start = 35.dp)
+
             )
         }
 

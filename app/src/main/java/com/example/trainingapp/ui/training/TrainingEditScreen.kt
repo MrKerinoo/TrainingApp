@@ -32,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -223,24 +224,26 @@ private fun InfoBody(
 ) {
     Row (
         modifier = Modifier
-            .padding(dimensionResource(id = R.dimen.padding_large))
+            .padding(horizontal = dimensionResource(id = R.dimen.padding_large))
     ){
         Text(
             text = stringResource(R.string.sets),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
-        Spacer(Modifier.weight(1f))
 
         Text (
             text = stringResource(R.string.reps),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .padding(start = 105.dp)
         )
 
-        Spacer(Modifier.weight(1f))
 
         Text(
             text = stringResource(R.string.weight),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .padding(start = 105.dp)
         )
     }
 }
@@ -252,11 +255,12 @@ private fun ExerciseItem (
 ) {
     Column (
         modifier = modifier
-            .border(1.dp, MaterialTheme.colorScheme.tertiary)
+            .border(3.dp, MaterialTheme.colorScheme.tertiary)
     ){
         Text (
             text = exercise.name,
             style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
         )
@@ -265,25 +269,34 @@ private fun ExerciseItem (
 
         Row (
             modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_large))
+                .padding(
+                    horizontal = dimensionResource(id = R.dimen.padding_large),
+                    vertical = dimensionResource(id = R.dimen.padding_small)
+                )
         ){
 
             Text(
                 text = exercise.sets.toString(),
                 style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(start = 10.dp)
             )
             Spacer(Modifier.weight(1f))
 
             Text (
                 text = exercise.reps.toString(),
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(start = 20.dp)
             )
 
             Spacer(Modifier.weight(1f))
 
             Text(
                 text = exercise.weight.toString(),
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(bottom = dimensionResource(R.dimen.padding_medium))
             )
         }
     }

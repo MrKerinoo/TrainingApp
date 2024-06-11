@@ -59,7 +59,8 @@ fun ExerciseEditScreen(
                     viewModel.updateExercise()
                     navigateBack()
                 } },
-                enabled = exerciseUiState.isEntryValid,
+                enabled = exerciseUiState.isNameValid && exerciseUiState.isSetsValid &&
+                        exerciseUiState.isRepsValid && exerciseUiState.isWeightValid,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.tertiary
                 ),
@@ -69,7 +70,8 @@ fun ExerciseEditScreen(
             ) {
                 Text(
                     text = stringResource(R.string.save_action),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
         },
@@ -125,7 +127,8 @@ fun ExerciseEditBody(
         {
             Text(
                 text = stringResource(R.string.delete_exercise_action),
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.titleMedium,
             )
         }
 

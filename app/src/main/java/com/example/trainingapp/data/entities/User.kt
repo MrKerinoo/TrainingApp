@@ -11,6 +11,6 @@ data class User (
     val age: Int,
     val weight: Float,
     val height: Float,
-    val lang: String,
+    val lang: Int,
     val darkMode: Boolean = true
 )

@@ -77,7 +77,7 @@ fun UserScreen(
                 userUiState = userUiState,
                 onUserValueChange = { viewModel.updateUiState(it) },
                 onSaveClick = {
-                    if (viewModel.userExists())
+                    if (userUiState.userDetails.id != 0)
                     {
                         coroutineScope.launch {
                             viewModel.updateUser() }
@@ -116,6 +116,7 @@ fun ProfileBody (
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.onTertiary,
             ),
+            enabled = userUiState.isAgeValid && userUiState.isWeightValid && userUiState.isHeightValid,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -165,6 +166,7 @@ private fun UserInputForm(
     OutlinedTextField(
         value = userUiState.userDetails.age,
         onValueChange = { newValue -> onUserValueChange(userUiState.userDetails.copy(age = newValue))},
+        isError = !userUiState.isAgeValid,
         label = { Text(stringResource(R.string.user_age_req)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = OutlinedTextFieldDefaults.colors(
@@ -189,6 +191,7 @@ private fun UserInputForm(
     OutlinedTextField(
         value = userUiState.userDetails.weight,
         onValueChange = { newValue -> onUserValueChange(userUiState.userDetails.copy(weight = newValue))},
+        isError = !userUiState.isWeightValid,
         label = { Text(stringResource(R.string.user_weight_req)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = OutlinedTextFieldDefaults.colors(
@@ -213,6 +216,7 @@ private fun UserInputForm(
     OutlinedTextField(
         value = userUiState.userDetails.height,
         onValueChange = { newValue -> onUserValueChange(userUiState.userDetails.copy(height = newValue))},
+        isError = !userUiState.isHeightValid,
         label = { Text(stringResource(R.string.user_height_req)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = OutlinedTextFieldDefaults.colors(

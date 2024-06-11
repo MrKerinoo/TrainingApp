@@ -65,7 +65,8 @@ fun ExerciseEntryScreen(
                     viewModel.saveExercise(trainingId!!)
                     navigateBack()
                 } },
-                enabled = exerciseUiState.isEntryValid,
+                enabled = exerciseUiState.isNameValid && exerciseUiState.isSetsValid &&
+                        exerciseUiState.isRepsValid && exerciseUiState.isWeightValid,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.tertiary
                 ),
@@ -75,10 +76,13 @@ fun ExerciseEntryScreen(
             ) {
                 Text(
                     text = stringResource(R.string.save_action),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
-        })
+        },
+        modifier = modifier
+    )
     {innerPadding ->
         Box (
             modifier = Modifier
@@ -124,7 +128,9 @@ fun ExerciseEntryForm(
     ) {
         OutlinedTextField(
             value = exerciseUiState.exerciseDetails.name,
-            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(name = newValue))},
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(name = newValue))
+            },
+            isError = !exerciseUiState.isNameValid,
             label = { Text(stringResource(R.string.exercise_name_req)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.primary,
@@ -147,7 +153,9 @@ fun ExerciseEntryForm(
 
         OutlinedTextField(
             value = exerciseUiState.exerciseDetails.sets,
-            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(sets = newValue))},
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(sets = newValue))
+            },
+            isError = !exerciseUiState.isSetsValid,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.exercise_sets_req)) },
             colors = OutlinedTextFieldDefaults.colors(
@@ -171,7 +179,9 @@ fun ExerciseEntryForm(
 
         OutlinedTextField(
             value = exerciseUiState.exerciseDetails.reps,
-            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(reps = newValue))},
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(reps = newValue))
+            },
+            isError = !exerciseUiState.isRepsValid,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.exercise_reps_req)) },
             colors = OutlinedTextFieldDefaults.colors(
@@ -195,7 +205,8 @@ fun ExerciseEntryForm(
 
         OutlinedTextField(
             value = exerciseUiState.exerciseDetails.weight,
-            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(weight = newValue))},
+            onValueChange = { newValue -> onExerciseValueChange(exerciseUiState.exerciseDetails.copy(weight = newValue)) },
+            isError = !exerciseUiState.isWeightValid,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.exercise_weight_req)) },
             colors = OutlinedTextFieldDefaults.colors(
